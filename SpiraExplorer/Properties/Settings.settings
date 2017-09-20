@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+	  <Setting Name="AssignedProjects" Type="Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SerializableDictionary" TKey="string" TValue="string" Scope="User">
+		  <Value Profile="(Default)" />
+	  </Setting>
+	  <Setting Name="AllProjects" Type="Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SerializableList" TValue="string" Scope="User">
+		  <Value Profile="(Default)" />
+	  </Setting>
+	  <Setting Name="ShowUnassigned" Type="System.Boolean" Scope="User">
+	  <Value Profile="(Default)">True</Value>
+	</Setting>
+	<Setting Name="ShowCompleted" Type="System.Boolean" Scope="User">
+	  <Value Profile="(Default)">False</Value>
+	</Setting>
+  </Settings>
+</SettingsFile>

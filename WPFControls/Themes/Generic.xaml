@@ -1,0 +1,52 @@
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+   <ResourceDictionary.MergedDictionaries>
+      <ResourceDictionary Source="/WPFFormats;component/Themes/Generic/Brushes.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/Themes/Generic/Buttons.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/Themes/Generic/Common.xaml" />
+
+      <ResourceDictionary Source="/WPFFormats;component/Chromes/Themes/Generic.xaml" />
+
+      <ResourceDictionary Source="/WPFFormats;component/BusyIndicator/Themes/Generic.xaml" />
+
+      <ResourceDictionary Source="/WPFFormats;component/ButtonSpinner/Themes/Generic.xaml" />
+
+      <ResourceDictionary Source="/WPFFormats;component/Calculator/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/CalculatorUpDown/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/CheckComboBox/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/CheckListBox/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/ChildWindow/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/CollectionControl/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/ColorCanvas/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/ColorPicker/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/DropDownButton/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/Magnifier/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/MessageBox/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/DateTimeUpDown/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/DateTimePicker/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/MultiLineTextEditor/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/NumericUpDown/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/SplitButton/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/PropertyGrid/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/TimePicker/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/WatermarkTextBox/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/Wizard/Themes/Generic.xaml" />
+      <ResourceDictionary Source="/WPFFormats;component/Zoombox/Themes/Generic.xaml" />
+   </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{87F40C72-2AA5-4011-BAB2-29C6AD5C5B45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Resources</RootNamespace>
+    <AssemblyName>Business.resources</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>SpiraExplorer.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>Resources\Spira.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\SpiraExplorer\bin\x86\Debug\en-US\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\SpiraExplorer\bin\x86\Release\en-US\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\1.bmp" />
+    <None Include="SpiraExplorer.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgEdit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgFolderIncident.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgFolderRequirement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgFolderTask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgIncident.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgNo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgRefresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgRequirement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgSettings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgShowCompleted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgTask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ico_Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ico_Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\img_Info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\img_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\2_bmp.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\imgProject.png" />
+    <Resource Include="Resources\imgRelease.png" />
+    <Resource Include="Resources\imgTaskTime.png" />
+    <Resource Include="Resources\img_Save.png" />
+    <Content Include="Resources\Spira.ico" />
+    <None Include="Resources\Spira_NoComp.ico" />
+    <None Include="Resources\Spira_XP.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_DetectChanges="False" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Release" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

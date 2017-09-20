@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.cntlSpiraExplorer"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business;assembly=Business"
+	xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.10.0"
+	Height="Auto" Width="Auto"
+	Foreground="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}"
+	Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolboxBackgroundKey}}">
+
+    <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ToolBarPanel Height="Auto" DockPanel.Dock="Top" Background="{DynamicResource {x:Static vsfx:VsBrushes.CommandShelfBackgroundGradientKey}}">
+            <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Background="{DynamicResource {x:Static vsfx:VsBrushes.CommandBarGradientKey}}">
+                <Button Name="btnRefresh" ToolTip="Refresh Listings"  IsEnabledChanged="toolButton_IsEnabledChanged" Click="btnRefresh_Click" />
+                <Separator />
+                <ToggleButton Name="btnShowClosed" ToolTip="Show Closed &amp; Completed Items" IsEnabledChanged="toolButton_IsEnabledChanged" Click="btnShowClosed_Click" />
+                <Separator />
+                <Button Name="btnConfig" ToolTip="Project Explorer Configuration" Click="btnConfig_Click" />
+            </ToolBar>
+        </ToolBarPanel>
+        <ProgressBar DockPanel.Dock="Bottom" Height="15" IsIndeterminate="True" Foreground="Orange" Visibility="Hidden" Name="barLoading" />
+        <TreeView Name="trvProject" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="150" SelectedItemChanged="trvProject_SelectedItemChanged" BorderBrush="Transparent" BorderThickness="0" Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolboxBackgroundKey}}" Foreground="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type local:TreeViewArtifact}" ItemsSource="{Binding Path=Items}" >
+                    <ContentControl Content="{Binding Path=ArtifactHeaderDisplay,Mode=OneWay}" MouseDoubleClick="TreeNode_MouseDoubleClick" />
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded,Mode=TwoWay}"/>
+                    <Setter Property="ContextMenu" Value="{Binding Path=ArtifactContextMenu,Mode=OneWay}" />
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeViewItem Header="Test Designer Item #1" IsExpanded="True">
+                <TreeViewItem Header="Test Contained Designer Item" IsSelected="True" />
+            </TreeViewItem>
+        </TreeView>
+    </DockPanel>
+</UserControl>

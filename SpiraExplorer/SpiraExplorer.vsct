@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <!--<Extern href="msobtnid.h" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" />-->
+  <Commands package="guidSpiraExplorerPkg">
+    <Buttons>
+      <Button guid="guidSpiraExplorerCmdSet" id="cmdViewExplorerWindow" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_VIEW_BROWSER" />
+        <Icon guid="imgSpira" id="SpiraLogo" />
+        <Strings>
+          <CommandName>cmdViewExplorerWindow</CommandName>
+          <ButtonText>SpiraTeam Project Explorer</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+    <Bitmaps>
+      <Bitmap guid="imgSpira" href=".\Resources\img_Spira_24b.bmp" usedList="SpiraLogo" />
+    </Bitmaps>
+  </Commands>
+  <Symbols>
+    <GuidSymbol name="guidSpiraExplorerPkg" value="{6fdddea3-588b-4fe1-acb7-9c5b03bccbad}" />
+    <GuidSymbol name="guidSpiraExplorerCmdSet" value="{37778466-feef-4cea-bcb4-6c7a0a7c252b}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="cmdViewToolWindow" value="0x0100" />
+      <IDSymbol name="cmdViewExplorerWindow" value="0x0101" />
+    </GuidSymbol>
+    <GuidSymbol name="imgSpira" value="{A24C748D-0CA2-44CF-9DFE-14238395B8A8}">
+      <IDSymbol name="SpiraLogo" value="1" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A9537D2-58B7-4A53-9B53-3E0C0B119508}"
+	ProjectSection(SolutionItems) = preProject
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linked Projects", "Linked Projects", "{6C6F4308-7A1A-4D8E-8FD2-9355E89BAE87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiraExplorer", "SpiraExplorer\SpiraExplorer.csproj", "{DED7E66A-772F-4A0A-957E-01CA9895B07C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{256C278A-66AC-40CD-BB71-598586F6FA1C} = {256C278A-66AC-40CD-BB71-598586F6FA1C}
+		{63BB7B99-0E00-414B-8AF4-780921C28ABB} = {63BB7B99-0E00-414B-8AF4-780921C28ABB}
+		{72E591D6-8F83-4D8C-8F67-9C325E623234} = {72E591D6-8F83-4D8C-8F67-9C325E623234}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{256C278A-66AC-40CD-BB71-598586F6FA1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.resources", "SpiraExplorer.resources\Business.resources.csproj", "{87F40C72-2AA5-4011-BAB2-29C6AD5C5B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflectra.Global", "..\..\Inflectra.Global\Inflectra.Global\Inflectra.Global.csproj", "{63BB7B99-0E00-414B-8AF4-780921C28ABB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.ToolKit", "WPFControls\Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.ToolKit.csproj", "{72E591D6-8F83-4D8C-8F67-9C325E623234}"
+EndProject
+Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DED7E66A-772F-4A0A-957E-01CA9895B07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED7E66A-772F-4A0A-957E-01CA9895B07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED7E66A-772F-4A0A-957E-01CA9895B07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED7E66A-772F-4A0A-957E-01CA9895B07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{256C278A-66AC-40CD-BB71-598586F6FA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{256C278A-66AC-40CD-BB71-598586F6FA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{256C278A-66AC-40CD-BB71-598586F6FA1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{256C278A-66AC-40CD-BB71-598586F6FA1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87F40C72-2AA5-4011-BAB2-29C6AD5C5B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87F40C72-2AA5-4011-BAB2-29C6AD5C5B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87F40C72-2AA5-4011-BAB2-29C6AD5C5B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87F40C72-2AA5-4011-BAB2-29C6AD5C5B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BB7B99-0E00-414B-8AF4-780921C28ABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BB7B99-0E00-414B-8AF4-780921C28ABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BB7B99-0E00-414B-8AF4-780921C28ABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BB7B99-0E00-414B-8AF4-780921C28ABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E591D6-8F83-4D8C-8F67-9C325E623234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E591D6-8F83-4D8C-8F67-9C325E623234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E591D6-8F83-4D8C-8F67-9C325E623234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E591D6-8F83-4D8C-8F67-9C325E623234}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63BB7B99-0E00-414B-8AF4-780921C28ABB} = {6C6F4308-7A1A-4D8E-8FD2-9355E89BAE87}
+		{72E591D6-8F83-4D8C-8F67-9C325E623234} = {6C6F4308-7A1A-4D8E-8FD2-9355E89BAE87}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_AssemblyInfoFilename = SharedAssemblyInfo.cs
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_BuildVersioningStyle = None.None.None.DeltaBaseDate
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_StartDate = 2000/1/1
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_DetectChanges = False
+	EndGlobalSection
+EndGlobal

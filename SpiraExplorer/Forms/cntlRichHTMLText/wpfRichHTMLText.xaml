@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Inflectra.SpiraTest.IDEIntegration.VisualStudio2010.Controls.wpfRichHTMLText"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Width="Auto"
+	Height="Auto"
+	HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch">
+	<UserControl.Resources>
+		<Style x:Key="toolbarButton">
+			<Setter Property="Button.CommandTarget" Value="{Binding ElementName=_TextBox}" />
+			<Setter Property="Control.Padding" Value="0" />
+			<Setter Property="Control.Margin" Value="1,0,1,0" />
+			<Setter Property="Control.HorizontalContentAlignment" Value="Center" />
+			<Setter Property="Control.VerticalContentAlignment" Value="Center" />
+		</Style>
+		<Style x:Key="toolbarSeperator">
+			<Setter Property="Control.Margin" Value="3,0,3,0" />
+		</Style>
+	</UserControl.Resources>
+	<DockPanel LastChildFill="True">
+		<ToolBar DockPanel.Dock="Top" Name="_MenuBar" Height="25">
+			<ToggleButton Name="_toolBold" Command="EditingCommands.ToggleBold" Style="{StaticResource toolbarButton}">
+				<Image Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_bold.png" Height="16" />
+			</ToggleButton>
+			<ToggleButton Name="_toolItalic" Command="EditingCommands.ToggleItalic" Style="{StaticResource toolbarButton}">
+				<Image Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_italic.png" Height="16" />
+			</ToggleButton>
+			<ToggleButton Name="_toolUnderline" Command="EditingCommands.ToggleUnderline" Style="{StaticResource toolbarButton}">
+				<Image Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_underline.png" Height="16" />
+			</ToggleButton>
+			<Separator Style="{StaticResource toolbarSeperator}" />
+			<StackPanel Orientation="Horizontal" Margin="1,0,1,0">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_font.png" />
+				<ComboBox Name="_toolFont" Height="20" Width="150" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="2,0,0,0" IsEditable="True" IsReadOnly="True">
+					<ComboBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<VirtualizingStackPanel Width="150" />
+						</ItemsPanelTemplate>
+					</ComboBox.ItemsPanel>
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock FontFamily="{Binding}" FontSize="12" Text="{Binding}" ToolTip="{Binding Path=Source}" Padding="0" Margin="0" />
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+			</StackPanel>
+			<Separator Style="{StaticResource toolbarSeperator}" Visibility="Collapsed" />
+			<StackPanel Orientation="Horizontal" Margin="1,0,1,0">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_fontsize.png" />
+				<ComboBox Name="_toolSize" Height="20" Padding="0" IsEditable="True" IsTextSearchEnabled="False" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+					<ComboBoxItem>8</ComboBoxItem>
+					<ComboBoxItem>9</ComboBoxItem>
+					<ComboBoxItem IsSelected="True">10</ComboBoxItem>
+					<ComboBoxItem>11</ComboBoxItem>
+					<ComboBoxItem>12</ComboBoxItem>
+					<ComboBoxItem>14</ComboBoxItem>
+					<ComboBoxItem>16</ComboBoxItem>
+					<ComboBoxItem>18</ComboBoxItem>
+					<ComboBoxItem>20</ComboBoxItem>
+					<ComboBoxItem>22</ComboBoxItem>
+					<ComboBoxItem>24</ComboBoxItem>
+					<ComboBoxItem>26</ComboBoxItem>
+					<ComboBoxItem>28</ComboBoxItem>
+					<ComboBoxItem>36</ComboBoxItem>
+					<ComboBoxItem>48</ComboBoxItem>
+					<ComboBoxItem>76</ComboBoxItem>
+				</ComboBox>
+			</StackPanel>
+			<Separator Style="{StaticResource toolbarSeperator}" />
+			<Button Name="_toolFontColor" Click="_toolFontColor_Click" Style="{StaticResource toolbarButton}">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_fontcolor.png" />
+			</Button>
+			<Button Name="_toolFontHighlight" Click="_toolFontHighlight_Click" Style="{StaticResource toolbarButton}">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_fonthighlight.png" />
+			</Button>
+			<Separator Style="{StaticResource toolbarSeperator}" />
+			<ToggleButton Name="_toolJusLeft" Command="EditingCommands.AlignLeft" Style="{StaticResource toolbarButton}">
+				<Image Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_justleft.png" Height="16" />
+			</ToggleButton>
+			<ToggleButton Name="_toolJusCenter" Command="EditingCommands.AlignCenter" Style="{StaticResource toolbarButton}">
+				<Image Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_justcenter.png" Height="16" />
+			</ToggleButton>
+			<ToggleButton Name="_toolJusRight" Command="EditingCommands.AlignRight" Style="{StaticResource toolbarButton}">
+				<Image Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_justright.png" Height="16" />
+			</ToggleButton>
+			<Separator Style="{StaticResource toolbarSeperator}" />
+			<ToggleButton Name="_toolBullet" Command="EditingCommands.ToggleBullets" Style="{StaticResource toolbarButton}">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_listbullet.png" />
+			</ToggleButton>
+			<ToggleButton Name="_toolNumber" Command="EditingCommands.ToggleNumbering" Style="{StaticResource toolbarButton}">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_listnumber.png" />
+			</ToggleButton>
+			<Separator Style="{StaticResource toolbarSeperator}" />
+			<Button Name="_toolInsertLink" Click="_toolInsertLink_Click" Style="{StaticResource toolbarButton}">
+				<Image Height="16" Source="/SpiraExplorer;component/Controls/wpfRichHTMLText/Resources/img_link.png" />
+			</Button>
+		</ToolBar>
+	   <RichTextBox Name="_TextBox" FontFamily="Arial" Foreground="Black" FontSize="12" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="_TextBox_TextChanged" SpellCheck.IsEnabled="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+	</DockPanel>
+</UserControl>

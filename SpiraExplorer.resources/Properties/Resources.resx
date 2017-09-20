@@ -1,0 +1,686 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2_bmp.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="app_Colors_StyledBarColor" xml:space="preserve">
+    <value>#FFFFA500</value>
+    <comment>Color of the Progress Bars. In #aarrggbb or Color Name "orange".</comment>
+  </data>
+  <data name="flowSelectSolution" xml:space="preserve">
+    <value>&lt;FlowDocument xmlns="clr-namespace:System.Windows.Documents;assembly=PresentationFramework"&gt;
+ &lt;Paragraph&gt;
+  &lt;Bold&gt;Select SpiraTeam Server Projects:&lt;/Bold&gt;
+ &lt;/Paragraph&gt;
+ &lt;Paragraph&gt;
+  Select SpiraTeam projects to associate with solution “%solution%”
+ &lt;/Paragraph&gt;
+&lt;/FlowDocument&gt;</value>
+    <comment>Flowdocument used when there is a solution loaded.</comment>
+  </data>
+  <data name="flowSelectNoSolution" xml:space="preserve">
+    <value>&lt;FlowDocument xmlns="clr-namespace:System.Windows.Documents;assembly=PresentationFramework"&gt;
+ &lt;Paragraph&gt;
+  &lt;Bold&gt;Add SpiraTeam Server Projects:&lt;/Bold&gt;
+ &lt;/Paragraph&gt;
+ &lt;Paragraph&gt;
+  Open a solution to enable assigning SpiraTeam projects.
+ &lt;/Paragraph&gt;
+&lt;/FlowDocument&gt;</value>
+    <comment>Flowdocument used when there are no solutions loaded.</comment>
+  </data>
+  <data name="icoLogo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spira.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgAdd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgAdd.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgDelete.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgEdit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgEdit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgError" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgError.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgErrorWPF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_Error.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgFolder.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgFolderIncident" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgFolderIncident.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgFolderRequirement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgFolderRequirement.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgFolderTask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgFolderTask.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgIncident" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgIncident.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgProject" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgProject.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgInfoWPF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_Info.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgSaveWPF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_Save.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgLogo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgLogoWPF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_Logo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgNo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgNo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgRefresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgRefresh.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgTaskTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgTaskTime.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgRequirement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgRequirement.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgSettings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgSettings.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgShowCompleted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgShowCompleted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgTask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgTask.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgRelease" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgRelease.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgWarningWPF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_Warning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mnuViewTreeTip" xml:space="preserve">
+    <value>Open the SpiraTeam Project Explorer</value>
+    <comment>Statusbar or Tooltip text for the command.</comment>
+  </data>
+  <data name="strAssignProjectTitle" xml:space="preserve">
+    <value>SpiraTeam Explorer Configuration</value>
+    <comment>String used for the AssignForm's title bar.</comment>
+  </data>
+  <data name="strCompany" xml:space="preserve">
+    <value>Inflectra</value>
+    <comment>Company name.</comment>
+  </data>
+  <data name="strMenuName" xml:space="preserve">
+    <value>View</value>
+    <comment>The menu to insert the command under.</comment>
+  </data>
+  <data name="strMenuView" xml:space="preserve">
+    <value>SpiraTeam Integration</value>
+    <comment>String used in the 'View' menu.</comment>
+  </data>
+  <data name="strNewSpiraProject" xml:space="preserve">
+    <value>New SpiraTeam Project</value>
+    <comment>String used for the NewProject title bar.</comment>
+  </data>
+  <data name="app_Tree_Name" xml:space="preserve">
+    <value>SpiraTeam Project Explorer</value>
+    <comment>String used for the ProjectTree ToolWindow </comment>
+  </data>
+  <data name="strSettingSectionGeneral" xml:space="preserve">
+    <value>General</value>
+    <comment>The 'General' section name in the settings file.</comment>
+  </data>
+  <data name="icoLogo_XP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spira_XP.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icoLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Spira_NoComp.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="app_ReportName" xml:space="preserve">
+    <value>Visual Studio 2010 Addin</value>
+    <comment>What to report to the API.</comment>
+  </data>
+  <data name="app_Tree_Incidents" xml:space="preserve">
+    <value>Incidents</value>
+  </data>
+  <data name="app_Tree_My" xml:space="preserve">
+    <value>My {0}</value>
+  </data>
+  <data name="app_Tree_Requirements" xml:space="preserve">
+    <value>Requirements</value>
+  </data>
+  <data name="app_Tree_Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="app_Tree_Unassigned" xml:space="preserve">
+    <value>Unassigned {0}</value>
+  </data>
+  <data name="app_NewProject_URLError" xml:space="preserve">
+    <value>Invalid URL</value>
+  </data>
+  <data name="app_NewProject_URLErrorMessage" xml:space="preserve">
+    <value>Your server url cannot contain a page in its address. URLshould be in the format:
+http://server/SpiraTeam/</value>
+  </data>
+  <data name="app_Colors_StyledBarError" xml:space="preserve">
+    <value>#FFC00000</value>
+    <comment>The error color for the progress bars.</comment>
+  </data>
+  <data name="app_Colors_StyledBarNormal" xml:space="preserve">
+    <value>#FF01D328</value>
+    <comment>The default 'green' color of the progress bars.</comment>
+  </data>
+  <data name="app_General_HoursAbbr" xml:space="preserve">
+    <value>hrs.</value>
+  </data>
+  <data name="app_Incident_DetectedRelease" xml:space="preserve">
+    <value>Detected Release</value>
+  </data>
+  <data name="app_General_EstEffort" xml:space="preserve">
+    <value>Estimated Effort</value>
+  </data>
+  <data name="app_Incident_Id" xml:space="preserve">
+    <value>Incident ID</value>
+  </data>
+  <data name="app_General_Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="app_General_Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="app_General_ProjEffort" xml:space="preserve">
+    <value>Projected Effort</value>
+  </data>
+  <data name="app_Incident_ResolvedRelease" xml:space="preserve">
+    <value>Resolved Release</value>
+  </data>
+  <data name="app_Incident_Severity" xml:space="preserve">
+    <value>Severity</value>
+  </data>
+  <data name="app_Incident_StatusType" xml:space="preserve">
+    <value>Status / Type</value>
+  </data>
+  <data name="app_Incident_VerifiedRelease" xml:space="preserve">
+    <value>Verified Release</value>
+  </data>
+  <data name="app_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="app_General_Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="app_General_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="app_Requirement_ID" xml:space="preserve">
+    <value>Requirement ID</value>
+  </data>
+  <data name="app_Requirement_PlannedEff" xml:space="preserve">
+    <value>Planned Effort</value>
+  </data>
+  <data name="app_Task_ID" xml:space="preserve">
+    <value>Task ID</value>
+  </data>
+  <data name="app_General_ActEffort" xml:space="preserve">
+    <value>Actual Effort</value>
+  </data>
+  <data name="app_Global_AssociatedRelease" xml:space="preserve">
+    <value>Assigned Release</value>
+  </data>
+  <data name="app_General_AssociatedRequirement" xml:space="preserve">
+    <value>Assigned Requirement</value>
+  </data>
+  <data name="app_General_CommunicationErrorMessage" xml:space="preserve">
+    <value>An error occurred while communicating with the SpiraTeam server.</value>
+  </data>
+  <data name="app_Project_Name" xml:space="preserve">
+    <value>Project Name:</value>
+  </data>
+  <data name="app_Project_ServerLogin" xml:space="preserve">
+    <value>Server User:</value>
+  </data>
+  <data name="app_Project_ServerUrl" xml:space="preserve">
+    <value>Server URL:</value>
+  </data>
+  <data name="app_Tree_FolderGettingData" xml:space="preserve">
+    <value>This folder is still retrieving data from the server.</value>
+  </data>
+  <data name="app_Tree_FolderHiIncidents" xml:space="preserve">
+    <value>Items italicized in red are at 0% completion and are beyond their start-date.</value>
+  </data>
+  <data name="app_Tree_FolderHiTasks" xml:space="preserve">
+    <value>Items italicized in red are past their due-date.</value>
+  </data>
+  <data name="app_Tree_FolderIncidents" xml:space="preserve">
+    <value>This folder contains incidents related to this Project.</value>
+  </data>
+  <data name="app_Tree_FolderMyIncidents" xml:space="preserve">
+    <value>This folder contains all incidents assigned to you.</value>
+  </data>
+  <data name="app_Tree_FolderMyRequirements" xml:space="preserve">
+    <value>This folder contains all requirements assigned to you.</value>
+  </data>
+  <data name="app_Tree_FolderMyTasks" xml:space="preserve">
+    <value>This folder contains all tasks assigned to you.</value>
+  </data>
+  <data name="app_Tree_FolderUnIncidents" xml:space="preserve">
+    <value>This folder contains all incidents that are unassigned.</value>
+  </data>
+  <data name="app_Tree_FolderUnRequirements" xml:space="preserve">
+    <value>This folder contains all requirements that are unassigned.</value>
+  </data>
+  <data name="app_Tree_FolderUnTasks" xml:space="preserve">
+    <value>This folder contains all tasks that are unassigned.</value>
+  </data>
+  <data name="app_Tree_FolderRequirements" xml:space="preserve">
+    <value>Requirements that are a part of this project.</value>
+  </data>
+  <data name="app_Tree_FolderTasks" xml:space="preserve">
+    <value>Tasks that are a part of this project.</value>
+  </data>
+  <data name="app_Error_RetrieveShort" xml:space="preserve">
+    <value>Error retrieving information</value>
+  </data>
+  <data name="app_General_Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="app_General_None" xml:space="preserve">
+    <value>-- None --</value>
+  </data>
+  <data name="app_Incident_Loading" xml:space="preserve">
+    <value>Loading Incident Details, please wait...</value>
+  </data>
+  <data name="app_General_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="app_General_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="app_General_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="app_General_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="app_Incident_DetectedBy" xml:space="preserve">
+    <value>Detected By</value>
+  </data>
+  <data name="app_General_ExpanderCustom" xml:space="preserve">
+    <value>Custom Properties</value>
+  </data>
+  <data name="app_General_ExpanderDetails" xml:space="preserve">
+    <value>Details / Description</value>
+  </data>
+  <data name="app_General_ExpanderResolution" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="app_General_ExpanderSchedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="app_General_OwnedBy" xml:space="preserve">
+    <value>Owned By</value>
+  </data>
+  <data name="app_General_PerComplete" xml:space="preserve">
+    <value>Percent Complete</value>
+  </data>
+  <data name="app_Incident_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="app_Incident_StatusActions" xml:space="preserve">
+    <value>Change Status</value>
+  </data>
+  <data name="app_Incident_LoadingWorkflow" xml:space="preserve">
+    <value>Loading Incident Workflow Step, please wait...</value>
+  </data>
+  <data name="app_General_AreYouSure" xml:space="preserve">
+    <value>Are You Sure?</value>
+  </data>
+  <data name="app_General_WorkflowResetFieldsMessage" xml:space="preserve">
+    <value>Due to workflow constraints, all fields will be reset to their initial values. Changes will be lost.
+Are you sure you want to change the status or type of the incident?</value>
+  </data>
+  <data name="app_Incident_Revert" xml:space="preserve">
+    <value>Revert ({0})</value>
+  </data>
+  <data name="app_General_Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="app_General_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="app_General_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="app_General_StartTimer" xml:space="preserve">
+    <value>Start Timer</value>
+  </data>
+  <data name="app_General_ViewBrowser" xml:space="preserve">
+    <value>View In Browser</value>
+  </data>
+  <data name="app_General_StopTimer" xml:space="preserve">
+    <value>Stop Timer</value>
+  </data>
+  <data name="app_General_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="app_General_ErrorLaunchingUrlMessage" xml:space="preserve">
+    <value>Error launching the URL in the default browser.</value>
+  </data>
+  <data name="app_General_LoseChangesMessage" xml:space="preserve">
+    <value>All fields will be reloaded, you will lose any changes you have made.
+Are you sure you want to continue?</value>
+  </data>
+  <data name="app_General_WindowOpenError" xml:space="preserve">
+    <value>Error Opening Window</value>
+  </data>
+  <data name="app_General_WindowOpenErrorMessage" xml:space="preserve">
+    <value>Error opening the toolwindow for the item selected. Try a different artifact, or try again later.</value>
+  </data>
+  <data name="app_General_CopyToClipboard" xml:space="preserve">
+    <value>Copy To Clipboard</value>
+  </data>
+  <data name="app_General_ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+  <data name="app_General_RequiredFields" xml:space="preserve">
+    <value>Cannot Save</value>
+  </data>
+  <data name="app_General_RequiredFieldsMessage" xml:space="preserve">
+    <value>One or more required fields are not entered. Cannot save until all required fields are filled in.</value>
+  </data>
+  <data name="app_Incident_Saving" xml:space="preserve">
+    <value>Saving Incident, please wait...</value>
+  </data>
+  <data name="app_Incident_Refreshing" xml:space="preserve">
+    <value>Refreshing Incident Details, please wait...</value>
+  </data>
+  <data name="app_General_AddNewComment" xml:space="preserve">
+    <value>Add New Comment</value>
+  </data>
+  <data name="app_General_UpdateError" xml:space="preserve">
+    <value>Update Error</value>
+  </data>
+  <data name="app_General_No" xml:space="preserve">
+    <value>_No</value>
+  </data>
+  <data name="app_General_Yes" xml:space="preserve">
+    <value>_Yes</value>
+  </data>
+  <data name="app_Incident_AskMergeConcurrency" xml:space="preserve">
+    <value>The incident you are trying to save has been modified by someone else but can be merged with the other changes. Do you want to merge your changed fields with the current version of the incident, or do you wish to reload the incident, losing all changes?</value>
+  </data>
+  <data name="app_General_Merge" xml:space="preserve">
+    <value>_Merge</value>
+  </data>
+  <data name="app_Incident_NoMergeConcurrency" xml:space="preserve">
+    <value>The incident you are trying to save has been modified by someone else and cannot be saved without data loss. Please refresh your Incident and make your changes again.</value>
+  </data>
+  <data name="app_General_Hours" xml:space="preserve">
+    <value>hours</value>
+  </data>
+  <data name="app_General_Minutes" xml:space="preserve">
+    <value>minutes</value>
+  </data>
+  <data name="app_General_RemEffort" xml:space="preserve">
+    <value>Remaining Effort</value>
+  </data>
+  <data name="app_General_CreateWindowError" xml:space="preserve">
+    <value>Could not create ToolWindow.</value>
+  </data>
+  <data name="app_Task_Priority_0" xml:space="preserve">
+    <value>-- None --</value>
+  </data>
+  <data name="app_Task_Priority_1" xml:space="preserve">
+    <value>1 - Critical</value>
+  </data>
+  <data name="app_Task_Priority_2" xml:space="preserve">
+    <value>2 - High</value>
+  </data>
+  <data name="app_Task_Priority_3" xml:space="preserve">
+    <value>3 - Medium</value>
+  </data>
+  <data name="app_Task_Priority_4" xml:space="preserve">
+    <value>4 - Low</value>
+  </data>
+  <data name="app_Task_Status_Blocked" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="app_Task_Status_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="app_Task_Status_Deferred" xml:space="preserve">
+    <value>Deferred</value>
+  </data>
+  <data name="app_Task_Status_InProgress" xml:space="preserve">
+    <value>In Progress</value>
+  </data>
+  <data name="app_Task_Status_NotStarted" xml:space="preserve">
+    <value>Not Started</value>
+  </data>
+  <data name="app_Task_LastModified" xml:space="preserve">
+    <value>Last Modified:</value>
+  </data>
+  <data name="app_Task_Loading" xml:space="preserve">
+    <value>Loading Task Details, please wait...</value>
+  </data>
+  <data name="app_Task_MergeConcurrency" xml:space="preserve">
+    <value>The task you are trying to save has been modified by someone else but can be merged with the other changes. Do you want to merge your changed fields with the current version of the task, or do you wish to reload the task, losing all changes?</value>
+  </data>
+  <data name="app_Task_NoMergeConcurrency" xml:space="preserve">
+    <value>The task you are trying to save has been modified by someone else and cannot be saved without data loss. Please refresh your task and make your changes again.</value>
+  </data>
+  <data name="app_Task_OpenedBy" xml:space="preserve">
+    <value>Opened By</value>
+  </data>
+  <data name="app_Task_Refreshing" xml:space="preserve">
+    <value>Refreshing Task Details, please wait...</value>
+  </data>
+  <data name="app_Task_Saving" xml:space="preserve">
+    <value>Saving Task, please wait...</value>
+  </data>
+  <data name="app_Task_AddCommentErrorMessage" xml:space="preserve">
+    <value>The task was updated, but there was an error adding your comment.</value>
+  </data>
+  <data name="app_Requirement_Status_Accepted" xml:space="preserve">
+    <value>Accepted</value>
+  </data>
+  <data name="app_Requirement_Status_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="app_Requirement_Status_Evaluated" xml:space="preserve">
+    <value>Evaluated</value>
+  </data>
+  <data name="app_Requirement_Status_InProgress" xml:space="preserve">
+    <value>In Progress</value>
+  </data>
+  <data name="app_Requirement_Status_Obsolete" xml:space="preserve">
+    <value>Obsolete</value>
+  </data>
+  <data name="app_Requirement_Status_Planned" xml:space="preserve">
+    <value>Planned</value>
+  </data>
+  <data name="app_Requirement_Status_Rejected" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="app_Requirement_Status_Requested" xml:space="preserve">
+    <value>Requested</value>
+  </data>
+  <data name="app_General_AddCommentErrorMessage" xml:space="preserve">
+    <value>The artifact was updated, but there was an error adding your comment.</value>
+  </data>
+  <data name="app_Requirement_CreatedBy" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="app_Requirement_Loading" xml:space="preserve">
+    <value>Loading Requirement, please wait...</value>
+  </data>
+  <data name="app_Requirement_Saving" xml:space="preserve">
+    <value>Saving Requirement, please wait...</value>
+  </data>
+  <data name="app_General_ApplicationShortName" xml:space="preserve">
+    <value>SpiraTeamAddin</value>
+  </data>
+  <data name="app_Requirement_AskMergeConcurrency" xml:space="preserve">
+    <value>The requirement you are trying to save has been modified by someone else but can be merged with the other changes. Do you want to merge your changed fields with the current version of the requirement, or do you wish to reload and lose all your changes?</value>
+  </data>
+  <data name="app_Requirement_NoMergeConcurrency" xml:space="preserve">
+    <value>The requirement you are trying to save has been modified by someone else and cannot be saved without data loss. Please refresh your requirement and make your changes again.</value>
+  </data>
+  <data name="app_Requirement_Refreshing" xml:space="preserve">
+    <value>Refreshing Requirement, please wait...</value>
+  </data>
+  <data name="app_Requirement_ExpanderTask" xml:space="preserve">
+    <value>Assigned Tasks</value>
+  </data>
+  <data name="app_Global_SaveChanges" xml:space="preserve">
+    <value>Save Changes?</value>
+  </data>
+  <data name="app_Global_SaveChangesMessage" xml:space="preserve">
+    <value>Do you wish to save the changes you made to the artifact?</value>
+  </data>
+  <data name="app_General_ButtonRetry" xml:space="preserve">
+    <value>_Retry</value>
+  </data>
+  <data name="app_General_TalkingToServerErrorMessage" xml:space="preserve">
+    <value>There was an error communicating with the server.</value>
+  </data>
+  <data name="app_General_TalkingToServerErrorMessageDetails" xml:space="preserve">
+    <value>Details of the error are:</value>
+  </data>
+  <data name="app_General_InvalidUsernameOrPassword" xml:space="preserve">
+    <value>Invalid Username or Password</value>
+  </data>
+  <data name="app_General_InvalidProject" xml:space="preserve">
+    <value>Could not access project.</value>
+  </data>
+  <data name="app_General_UnexpectedError" xml:space="preserve">
+    <value>There was an unexpected error in the Addin. it is recommended that you save all your work and restart Visual Studio.</value>
+  </data>
+</root>
