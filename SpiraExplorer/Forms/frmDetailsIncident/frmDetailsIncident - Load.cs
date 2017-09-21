@@ -16,7 +16,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 	public partial class frmDetailsIncident : UserControl
 	{
 		#region Client Values
-		private ImportExportClient _client;
+		private SoapServiceClient _client;
 		private int _clientNumRunning; //Holds the number current executing.
 		private int _clientNum; //Holds the total amount. Needed to multiple ASYNC() calls.
 		#endregion
@@ -265,7 +265,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our project users.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Project_RetrieveUserMembershipCompletedEventArgs</param>
 		private void _client_Project_RetrieveUserMembershipCompleted(object sender, Project_RetrieveUserMembershipCompletedEventArgs e)
 		{
@@ -310,7 +310,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our project releases.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Release_RetrieveCompletedEventArgs</param>
 		private void _client_Release_RetrieveCompleted(object sender, Release_RetrieveCompletedEventArgs e)
 		{
@@ -355,7 +355,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our task types.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveTypesCompletedEventArgs</param>
 		private void _client_Incident_RetrieveTypesCompleted(object sender, Incident_RetrieveTypesCompletedEventArgs e)
 		{
@@ -400,7 +400,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our task statuses.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveStatusesCompletedEventArgs</param>
 		private void _client_Incident_RetrieveStatusesCompleted(object sender, Incident_RetrieveStatusesCompletedEventArgs e)
 		{
@@ -445,7 +445,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our task priorities.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrievePrioritiesCompletedEventArgs</param>
 		private void _client_Incident_RetrievePrioritiesCompleted(object sender, Incident_RetrievePrioritiesCompletedEventArgs e)
 		{
@@ -487,7 +487,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our task severities.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveSeveritiesCompletedEventArgs</param>
 		private void _client_Incident_RetrieveSeveritiesCompleted(object sender, Incident_RetrieveSeveritiesCompletedEventArgs e)
 		{
@@ -578,7 +578,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting the main task details.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveByIdCompletedEventArgs</param>
 		private void _client_Incident_RetrieveByIdCompleted(object sender, Incident_RetrieveByIdCompletedEventArgs e)
 		{
@@ -640,7 +640,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished getting available workflow transitions.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveWorkflowTransitionsCompletedEventArgs</param>
 		private void _client_Incident_RetrieveWorkflowTransitionsCompleted(object sender, Incident_RetrieveWorkflowTransitionsCompletedEventArgs e)
 		{
@@ -686,7 +686,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished pulling all the workflow fields and their status.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveWorkflowFieldsCompletedEventArgs</param>
 		private void _client_Incident_RetrieveWorkflowFieldsCompleted(object sender, Incident_RetrieveWorkflowFieldsCompletedEventArgs e)
 		{
@@ -732,7 +732,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished getting custom workflow property fields.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveWorkflowCustomPropertiesCompletedEventArgs</param>
 		private void _client_Incident_RetrieveWorkflowCustomPropertiesCompleted(object sender, Incident_RetrieveWorkflowCustomPropertiesCompletedEventArgs e)
 		{
@@ -820,7 +820,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting the attached documents for the artifact.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Document_RetrieveForArtifactCompletedEventArgs</param>
 		private void _client_Document_RetrieveForArtifactCompleted(object sender, Document_RetrieveForArtifactCompletedEventArgs e)
 		{
@@ -857,7 +857,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client returns with our needed URL</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">System_GetArtifactUrlCompletedEventArgs</param>
 		private void _client_System_GetArtifactUrlCompleted(object sender, System_GetArtifactUrlCompletedEventArgs e)
 		{
@@ -1160,9 +1160,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					else
 					{
 						//Loop through available transitions. If this status is available, add it.
-						foreach (Business.SpiraTeam_Client.RemoteWorkflowIncidentTransition Transition in this._WorkflowTransitions)
+						foreach (Business.SpiraTeam_Client.RemoteWorkflowTransition Transition in this._WorkflowTransitions)
 						{
-							if (Transition.IncidentStatusId_Output == Status.IncidentStatusId)
+							if (Transition.StatusId_Output == Status.IncidentStatusId)
 							{
 								if (!Transition.Name.Trim().StartsWith("»")) Transition.Name = "» " + Transition.Name;
 								menu.Items.Add(Transition);

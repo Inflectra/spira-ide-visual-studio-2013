@@ -32,7 +32,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		private int? _IncSelectedStatus;
 
 		//Holds available transitions for the loaded Incident.
-		private List<RemoteWorkflowIncidentTransition> _WorkflowTransitions;
+		private List<RemoteWorkflowTransition> _WorkflowTransitions;
 		#endregion
 
 		/// <summary>Generates a dictionary of IDs and WorkflowFields available for Incidents. Optionally will assign settings given.</summary>
@@ -83,7 +83,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		/// <summary>Creates a useable dictionary of Field ID and Status from the given list of Workflow Fields.</summary>
 		/// <param name="workflowFields">A list of Workflow Fields</param>
 		/// <returns>A dictionary of FieldId and current Status.</returns>
-		private Dictionary<int, WorkflowField.WorkflowStatusEnum> workflow_LoadFieldStatus(List<RemoteWorkflowIncidentFields> workflowFields)
+		private Dictionary<int, WorkflowField.WorkflowStatusEnum> workflow_LoadFieldStatus(List<RemoteWorkflowField> workflowFields)
 		{
 			string METHOD = CLASS + "workflow_SetEnabledFields(std)";
 			Logger.LogTrace_EnterMethod(METHOD);
@@ -96,7 +96,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				foreach (KeyValuePair<int, WorkflowField> kvpField in this._WorkflowFields)
 				{
 					WorkflowField.WorkflowStatusEnum status = WorkflowField.WorkflowStatusEnum.Normal;
-					List<RemoteWorkflowIncidentFields> wkfFields = workflowFields.Where(wkf => wkf.FieldId == kvpField.Key).ToList();
+					List<RemoteWorkflowField> wkfFields = workflowFields.Where(wkf => wkf.FieldId == kvpField.Key).ToList();
 					if (wkfFields.Count > 0)
 					{
 						//The order of statuses is: Required above Hidden above Disabled.
@@ -130,7 +130,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		/// <summary>Creates a useable dictionary of Field ID and Status from the given list of Workflow Custom Fields.</summary>
 		/// <param name="workflowFields">A list of Workflow Fields</param>
 		/// <returns>A dictionary of FieldId and current Status.</returns>
-		private Dictionary<int, WorkflowField.WorkflowStatusEnum> workflow_LoadFieldStatus(List<RemoteWorkflowIncidentCustomProperties> workflowFields)
+		private Dictionary<int, WorkflowField.WorkflowStatusEnum> workflow_LoadFieldStatus(List<RemoteWorkflowCustomProperty> workflowFields)
 		{
 			string METHOD = CLASS + "workflow_SetEnabledFields(cust)";
 			Logger.LogTrace_EnterMethod(METHOD);
@@ -140,7 +140,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			try
 			{
 				//Go through each workflow entry..
-				foreach (RemoteWorkflowIncidentCustomProperties prop in workflowFields)
+				foreach (RemoteWorkflowCustomProperty prop in workflowFields)
 				{
 					WorkflowField.WorkflowStatusEnum status = WorkflowField.WorkflowStatusEnum.Normal;
 					try
@@ -485,7 +485,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			try
 			{
 				//This is a potentially different workflow, so create the client to go out and get fields.
-				ImportExportClient wkfClient = StaticFuncs.CreateClient(this._Project.ServerURL.ToString());
+				SoapServiceClient wkfClient = StaticFuncs.CreateClient(this._Project.ServerURL.ToString());
 				wkfClient.Connection_Authenticate2Completed += new EventHandler<Connection_Authenticate2CompletedEventArgs>(wkfClient_Connection_Authenticate2Completed);
 				wkfClient.Connection_ConnectToProjectCompleted += new EventHandler<Connection_ConnectToProjectCompletedEventArgs>(wkfClient_Connection_ConnectToProjectCompleted);
 				wkfClient.Incident_RetrieveWorkflowFieldsCompleted += new EventHandler<Incident_RetrieveWorkflowFieldsCompletedEventArgs>(wkfClient_Incident_RetrieveWorkflowFieldsCompleted);
@@ -516,9 +516,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this._clientNumRunning--;
 				this.barLoadingIncident.Value++;
 
-				if (sender is ImportExportClient)
+				if (sender is SoapServiceClient)
 				{
-					ImportExportClient client = sender as ImportExportClient;
+					SoapServiceClient client = sender as SoapServiceClient;
 
 					if (!e.Cancelled)
 					{
@@ -564,9 +564,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this._clientNumRunning--;
 				this.barLoadingIncident.Value++;
 
-				if (sender is ImportExportClient)
+				if (sender is SoapServiceClient)
 				{
-					ImportExportClient client = sender as ImportExportClient;
+					SoapServiceClient client = sender as SoapServiceClient;
 
 					if (!e.Cancelled)
 					{
@@ -604,7 +604,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished pulling all the workflow fields and their status.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveWorkflowFieldsCompletedEventArgs</param>
 		private void wkfClient_Incident_RetrieveWorkflowFieldsCompleted(object sender, Incident_RetrieveWorkflowFieldsCompletedEventArgs e)
 		{
@@ -616,7 +616,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this._clientNumRunning--;
 				this.barLoadingIncident.Value++;
 
-				if (sender is ImportExportClient)
+				if (sender is SoapServiceClient)
 				{
 					if (!e.Cancelled)
 					{
@@ -650,7 +650,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished getting custom workflow property fields.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveWorkflowCustomPropertiesCompletedEventArgs</param>
 		private void wkfClient_Incident_RetrieveWorkflowCustomPropertiesCompleted(object sender, Incident_RetrieveWorkflowCustomPropertiesCompletedEventArgs e)
 		{
@@ -662,7 +662,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this._clientNumRunning--;
 				this.barLoadingIncident.Value++;
 
-				if (sender is ImportExportClient)
+				if (sender is SoapServiceClient)
 				{
 					if (!e.Cancelled)
 					{

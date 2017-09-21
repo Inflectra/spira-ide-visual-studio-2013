@@ -64,7 +64,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 		/// boolean						- For a folder, determines whether or not this folder contains
 		///								  MY artifact (true) or Unassigned artifacts (false). After the
 		///								  associated client is finished pulling data.
-		/// Spira_ImportExportClient	- For a folder, is the client that is actively going out to get
+		/// Spira_SoapServiceClient	- For a folder, is the client that is actively going out to get
 		///								  information for populating itself. After this client is 
 		///								  finished, will be changed to the boolean above.
 		///	RemoteArtifact				- For individual items, the populated RemoteArtifact.
@@ -601,7 +601,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 			//We need to get the URL, and then launch it.
 			string strUrl = ((SpiraProject)this.ArtifactParentProject.ArtifactTag).ServerURL.ToString();
 
-			Business.SpiraTeam_Client.ImportExportClient client = StaticFuncs.CreateClient(strUrl);
+			Business.SpiraTeam_Client.SoapServiceClient client = StaticFuncs.CreateClient(strUrl);
 
 			if (this.ArtifactType != ArtifactTypeEnum.None)
 			{

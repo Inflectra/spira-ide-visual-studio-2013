@@ -12,7 +12,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 	{
 		#region Internal Vars
 		private bool _isConnected = false;
-		private SpiraTeam_Client.ImportExportClient _client;
+		private SpiraTeam_Client.SoapServiceClient _client;
 		private Exception _lastException;
 		private ClientStateEnum _state = ClientStateEnum.Idle;
 		private string _server;
@@ -70,7 +70,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 
 		#region Properties
 		/// <summary>The client to communicate with the server with.</summary>
-		public SpiraTeam_Client.ImportExportClient Client
+		public SpiraTeam_Client.SoapServiceClient Client
 		{
 			get
 			{

@@ -227,7 +227,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 		#region Client Events
 		/// <summary>Hit when the Incident clients are finished retrieving data.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveCompletedEventArgs</param>
 		private void _client_Incident_RetrieveCompleted(object sender, Business.SpiraTeam_Client.Incident_RetrieveCompletedEventArgs e)
 		{
@@ -274,7 +274,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				//Disconnect the client, subtract from the count.
 				try
 				{
-					((ImportExportClient)sender).Connection_DisconnectAsync();
+					((SoapServiceClient)sender).Connection_DisconnectAsync();
 				}
 				catch { }
 				parentNode.ArtifactTag = null;
@@ -306,7 +306,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 						TreeViewArtifact artItem = sender as TreeViewArtifact;
 
 						//No window, update it ourselves. Create the client.
-						ImportExportClient clientWkTime = StaticFuncs.CreateClient(((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).ServerURL.ToString());
+						SoapServiceClient clientWkTime = StaticFuncs.CreateClient(((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).ServerURL.ToString());
 						//Set event handlers.
 						clientWkTime.Connection_Authenticate2Completed += new EventHandler<Connection_Authenticate2CompletedEventArgs>(clientWkTime_Connection_Authenticate2Completed);
 						clientWkTime.Connection_ConnectToProjectCompleted += new EventHandler<Connection_ConnectToProjectCompletedEventArgs>(clientWkTime_Connection_ConnectToProjectCompleted);
@@ -339,13 +339,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the UpdateWorkTimeClient is finished updating a Requirement, Incident, or Task.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientWkTime_Artifact_UpdateCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
 			try
 			{
-				ImportExportClient wktimeClient = sender as ImportExportClient;
+				SoapServiceClient wktimeClient = sender as SoapServiceClient;
 				TreeViewArtifact treeArt = (TreeViewArtifact)e.UserState;
 
 				this.barLoading.Value += 1;
@@ -367,7 +367,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the UpdateWorkTimeClient is finished disconnecting from the server.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientWkTime_Connection_DisconnectCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
@@ -387,13 +387,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 		/// <summary>Hit when the UpdateWorkTimeClient is finished retrieving the artifact from the server.</summary>
 		/// <remarks>This is where the values are actually saved to the artifact.</remarks>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientWkTime_Artifact_RetrieveByIdCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
 			try
 			{
-				ImportExportClient wktimeClient = sender as ImportExportClient;
+				SoapServiceClient wktimeClient = sender as SoapServiceClient;
 				TreeViewArtifact treeArt = (TreeViewArtifact)e.UserState;
 
 				this.barLoading.Value += 1;
@@ -479,13 +479,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the UpdateWorkTimeClient is finished connecting to the project.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientWkTime_Connection_ConnectToProjectCompleted(object sender, Connection_ConnectToProjectCompletedEventArgs e)
 		{
 			try
 			{
-				ImportExportClient wktimeClient = sender as ImportExportClient;
+				SoapServiceClient wktimeClient = sender as SoapServiceClient;
 				TreeViewArtifact treeArt = (TreeViewArtifact)e.UserState;
 
 				this.barLoading.Value += 1;
@@ -530,13 +530,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the UpdateWorkTimeClient is finished connecting to the server.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientWkTime_Connection_Authenticate2Completed(object sender, Connection_Authenticate2CompletedEventArgs e)
 		{
 			try
 			{
-				ImportExportClient wktimeClient = sender as ImportExportClient;
+				SoapServiceClient wktimeClient = sender as SoapServiceClient;
 				TreeViewArtifact treeArt = (TreeViewArtifact)e.UserState;
 
 				this.barLoading.Value += 1;
@@ -747,7 +747,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when a client sent to retrieve Requirements is finished with results.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Requirement_RetrieveCompletedEventArgs</param>
 		private void _client_Requirement_RetrieveCompleted(object sender, Requirement_RetrieveCompletedEventArgs e)
 		{
@@ -797,7 +797,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				//Disconnect the client, subtract from the count.
 				try
 				{
-					((ImportExportClient)sender).Connection_DisconnectAsync();
+					((SoapServiceClient)sender).Connection_DisconnectAsync();
 				}
 				catch { }
 				parentNode.ArtifactTag = null;
@@ -812,7 +812,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when a client sent to retrieve Tasks is finished with results.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Task_RetrieveCompletedEventArgs</param>
 		private void _client_Task_RetrieveCompleted(object sender, Task_RetrieveCompletedEventArgs e)
 		{
@@ -859,7 +859,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				//Disconnect the client, subtract from the count.
 				try
 				{
-					((ImportExportClient)sender).Connection_DisconnectAsync();
+					((SoapServiceClient)sender).Connection_DisconnectAsync();
 				}
 				catch { }
 				parentNode.ArtifactTag = null;

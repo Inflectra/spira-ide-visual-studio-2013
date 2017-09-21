@@ -17,7 +17,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 	public partial class frmNewSpiraProject : Window
 	{
 		#region Internal Vars
-		private ImportExportClient _client;
+		private SoapServiceClient _client;
 		#endregion
 
 		public frmNewSpiraProject()
@@ -149,7 +149,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when communication is finished with the server.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">EventArgs</param>
 		private void _client_CommunicationFinished(object sender, AsyncCompletedEventArgs e)
 		{
@@ -165,7 +165,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							if (evt.Result)
 							{
 								this.txtStatus.Text = "Getting user information...";
-								this._client.User_RetrieveByUserNameAsync(this.txbUserID.Text);
+								this._client.User_RetrieveByUserNameAsync(this.txbUserID.Text, false);
 							}
 							else
 							{

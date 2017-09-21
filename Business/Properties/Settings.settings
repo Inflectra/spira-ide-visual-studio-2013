@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="app_ServiceURI" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">/Services/v4_0/ImportExport.svc</Value>
+      <Value Profile="(Default)">/Services/v5_0/SoapService.svc</Value>
     </Setting>
   </Settings>
 </SettingsFile>

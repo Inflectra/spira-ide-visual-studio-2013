@@ -409,13 +409,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				{
 
 					//Get the item they clicked.
-					RemoteWorkflowIncidentTransition wkfTrans = (((MenuItem)e.OriginalSource).Header) as RemoteWorkflowIncidentTransition;
+					RemoteWorkflowTransition wkfTrans = (((MenuItem)e.OriginalSource).Header) as RemoteWorkflowTransition;
 					if (wkfTrans != null)
 					{
 						if (wkfTrans.Name.Trim().StartsWith("»"))
 						{
 							//They selected a different status, update the selected index and call the workflow.
-							this._IncSelectedStatus = wkfTrans.IncidentStatusId_Output;
+							this._IncSelectedStatus = wkfTrans.StatusId_Output;
 
 							//Reset fields..
 							this.workflow_ClearAllRequiredHighlights();
@@ -426,10 +426,10 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 							//Clear menu items, add the 'revert' menu.
 							this.mnuActions.Items.Clear();
-							RemoteWorkflowIncidentTransition tempTrans = new RemoteWorkflowIncidentTransition();
+							RemoteWorkflowTransition tempTrans = new RemoteWorkflowTransition();
 							tempTrans.Name = String.Format(StaticFuncs.getCultureResource.GetString("app_Incident_Revert"), this._Incident.IncidentStatusName);
-							tempTrans.IncidentStatusId_Output = this._Incident.IncidentStatusId.Value;
-							tempTrans.IncidentStatusName_Output = this._Incident.IncidentStatusName;
+							tempTrans.StatusId_Output = this._Incident.IncidentStatusId.Value;
+							tempTrans.StatusName_Output = this._Incident.IncidentStatusName;
 							this.mnuActions.Items.Add(tempTrans);
 
 							//Update workflow fields..

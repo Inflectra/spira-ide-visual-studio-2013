@@ -15,7 +15,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 	public partial class frmDetailsRequirement : UserControl
 	{
 		#region Client Values
-		private ImportExportClient _client;
+		private SoapServiceClient _client;
 		private int _clientNumRunning; //Holds the number current executing.
 		private int _clientNum; //Holds the total amount. Needed to multiple ASYNC() calls.
 		#endregion
@@ -248,7 +248,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our project users.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Project_RetrieveUserMembershipCompletedEventArgs</param>
 		private void _client_Project_RetrieveUserMembershipCompleted(object sender, Project_RetrieveUserMembershipCompletedEventArgs e)
 		{
@@ -285,7 +285,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting our project releases.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Release_RetrieveCompletedEventArgs</param>
 		private void _client_Release_RetrieveCompleted(object sender, Release_RetrieveCompletedEventArgs e)
 		{
@@ -361,7 +361,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished getting the attached documents for the artifact.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Document_RetrieveForArtifactCompletedEventArgs</param>
 		private void _client_Document_RetrieveForArtifactCompleted(object sender, Document_RetrieveForArtifactCompletedEventArgs e)
 		{
@@ -397,7 +397,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client returns with our needed URL</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">System_GetArtifactUrlCompletedEventArgs</param>
 		private void _client_System_GetArtifactUrlCompleted(object sender, System_GetArtifactUrlCompletedEventArgs e)
 		{
@@ -444,7 +444,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client's finished getting the comments for the artifact.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Requirement_RetrieveCommentsCompletedEventArgs</param>
 		private void _client_Requirement_RetrieveCommentsCompleted(object sender, Requirement_RetrieveCommentsCompletedEventArgs e)
 		{
@@ -527,7 +527,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished getting the requirement.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Requirement_RetrieveByIdCompletedEventArgs</param>
 		private void _client_Requirement_RetrieveByIdCompleted(object sender, Requirement_RetrieveByIdCompletedEventArgs e)
 		{
@@ -576,7 +576,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when the client is finished getting a list of associated tasks.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Task_RetrieveCompletedEventArgs</param>
 		private void _client_Task_RetrieveCompleted(object sender, Task_RetrieveCompletedEventArgs e)
 		{
@@ -968,8 +968,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					this.loadItem_SelectStatus(requirement.StatusId);
 
 					// - Planned Effort
-					this.cntrlPlnEffortH.Text = ((requirement.PlannedEffort.HasValue) ? Math.Floor(((double)requirement.PlannedEffort / (double)60)).ToString() : "0");
-					this.cntrlPlnEffortM.Text = ((requirement.PlannedEffort.HasValue) ? ((double)requirement.PlannedEffort % (double)60).ToString() : "0");
+					//this.cntrlPlnEffortH.Text = ((requirement.PlannedEffort.HasValue) ? Math.Floor(((double)requirement.PlannedEffort / (double)60)).ToString() : "0");
+					//this.cntrlPlnEffortM.Text = ((requirement.PlannedEffort.HasValue) ? ((double)requirement.PlannedEffort % (double)60).ToString() : "0");
 
 					// - Description
 					this.cntrlDescription.HTMLText = requirement.Description;

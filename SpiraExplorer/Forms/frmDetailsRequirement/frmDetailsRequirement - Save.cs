@@ -45,7 +45,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					if (newRequirement != null)
 					{
 						//Create a client, and save task and resolution..
-						ImportExportClient clientSave = StaticFuncs.CreateClient(((SpiraProject)this._ArtifactDetails.ArtifactParentProject.ArtifactTag).ServerURL.ToString());
+						SoapServiceClient clientSave = StaticFuncs.CreateClient(((SpiraProject)this._ArtifactDetails.ArtifactParentProject.ArtifactTag).ServerURL.ToString());
 						clientSave.Connection_Authenticate2Completed += clientSave_Connection_Authenticate2Completed;
 						clientSave.Connection_ConnectToProjectCompleted += clientSave_Connection_ConnectToProjectCompleted;
 						clientSave.Requirement_UpdateCompleted += clientSave_Requirement_UpdateCompleted;
@@ -77,7 +77,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 		#region Client Events
 		/// <summary>Hit when we're finished connecting.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientSave_Connection_DisconnectCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
@@ -102,7 +102,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished adding a resolution.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_AddResolutionsCompletedEventArgs</param>
 		private void clientSave_Requirement_CreateCommentCompleted(object sender, Requirement_CreateCommentCompletedEventArgs e)
 		{
@@ -111,7 +111,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 			try
 			{
-				ImportExportClient client = (sender as ImportExportClient);
+				SoapServiceClient client = (sender as SoapServiceClient);
 				this._clientNumSaving--;
 				this.barSavingReq.Value++;
 
@@ -143,7 +143,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished updating the main information.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">AsyncCompletedEventArgs</param>
 		private void clientSave_Requirement_UpdateCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
@@ -151,7 +151,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			Logger.LogTrace_EnterMethod(METHOD + "  " + this._clientNumSaving.ToString() + " running.");
 			try
 			{
-				ImportExportClient client = (sender as ImportExportClient);
+				SoapServiceClient client = (sender as SoapServiceClient);
 				this._clientNumSaving--;
 				this.barSavingReq.Value++;
 
@@ -218,7 +218,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit if we hit a concurrency issue, and have to compare values.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Incident_RetrieveByIdCompletedEventArgs</param>
 		private void client_Requirement_RetrieveByIdCompleted(object sender, Requirement_RetrieveByIdCompletedEventArgs e)
 		{
@@ -227,7 +227,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 			try
 			{
-				ImportExportClient client = (sender as ImportExportClient);
+				SoapServiceClient client = (sender as SoapServiceClient);
 				this._clientNumSaving--;
 				this.barSavingReq.Value++;
 
@@ -279,7 +279,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're finished connecting to the project.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Connection_ConnectToProjectCompletedEventArgs</param>
 		private void clientSave_Connection_ConnectToProjectCompleted(object sender, Connection_ConnectToProjectCompletedEventArgs e)
 		{
@@ -288,7 +288,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 			try
 			{
-				ImportExportClient client = (sender as ImportExportClient);
+				SoapServiceClient client = (sender as SoapServiceClient);
 				this._clientNumSaving--;
 				this.barSavingReq.Value++;
 
@@ -345,7 +345,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		}
 
 		/// <summary>Hit when we're authenticated to the server.</summary>
-		/// <param name="sender">ImportExportClient</param>
+		/// <param name="sender">SoapServiceClient</param>
 		/// <param name="e">Connection_Authenticate2CompletedEventArgs</param>
 		private void clientSave_Connection_Authenticate2Completed(object sender, Connection_Authenticate2CompletedEventArgs e)
 		{
@@ -354,7 +354,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 			try
 			{
-				ImportExportClient client = (sender as ImportExportClient);
+				SoapServiceClient client = (sender as SoapServiceClient);
 				this._clientNumSaving--;
 				this.barSavingReq.Value++;
 
@@ -482,7 +482,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				retRequirement.ImportanceId = ((RequirementPriority)this.cntrlImportance.SelectedItem).PriorityId;
 				retRequirement.Name = this.cntrlName.Text.Trim();
 				retRequirement.OwnerId = ((RemoteUser)this.cntrlOwnedBy.SelectedItem).UserId;
-				retRequirement.PlannedEffort = StaticFuncs.GetMinutesFromValues(this.cntrlPlnEffortH.Text, this.cntrlPlnEffortM.Text);
+				//retRequirement.PlannedEffort = StaticFuncs.GetMinutesFromValues(this.cntrlPlnEffortH.Text, this.cntrlPlnEffortM.Text);
 				retRequirement.ReleaseId = ((RemoteRelease)this.cntrlRelease.SelectedItem).ReleaseId;
 				retRequirement.StatusId = ((RequirementStatus)this.cntrlStatus.SelectedItem).StatusId;
 
@@ -532,7 +532,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 				e.Handled = true;
 				//Get the client.
-				ImportExportClient client = ((dynamic)sender).Tag as ImportExportClient;
+				SoapServiceClient client = ((dynamic)sender).Tag as SoapServiceClient;
 				if (client != null)
 				{
 					//Switch screens again...

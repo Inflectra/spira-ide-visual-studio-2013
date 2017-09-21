@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="RemoteTestStep" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SpiraTeam_Client.RemoteTestStep, Service References.SpiraTeam_Client.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SpiraTeam_Client.RemoteTestStep</TypeInfo>
 </GenericObjectDataSource>

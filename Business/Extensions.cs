@@ -41,8 +41,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				retValue = (originalReq.Name.Equals(serverModdedReq.ImportanceId));
 			if (!retValue && userEnteredReq.OwnerId != originalReq.OwnerId)
 				retValue = (originalReq.OwnerId == serverModdedReq.OwnerId);
+            /*
 			if (!retValue && userEnteredReq.PlannedEffort != originalReq.PlannedEffort)
-				retValue = (originalReq.PlannedEffort == serverModdedReq.PlannedEffort);
+				retValue = (originalReq.PlannedEffort == serverModdedReq.PlannedEffort);*/
 			if (!retValue && userEnteredReq.ReleaseId != originalReq.ReleaseId)
 				retValue = (originalReq.ReleaseId == serverModdedReq.ReleaseId);
 			if (!retValue && userEnteredReq.StatusId != originalReq.StatusId)
@@ -159,8 +160,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 					retValue = (originalInc.SeverityId == serverModdedInc.SeverityId);
 				if (!retValue && userEnteredInc.StartDate != originalInc.StartDate)
 					retValue = (originalInc.StartDate == serverModdedInc.StartDate);
-				if (!retValue && userEnteredInc.TestRunStepId != originalInc.TestRunStepId)
-					retValue = (originalInc.TestRunStepId == serverModdedInc.TestRunStepId);
+				/*if (!retValue && userEnteredInc.TestRunStepId != originalInc.TestRunStepId)
+					retValue = (originalInc.TestRunStepId == serverModdedInc.TestRunStepId);*/
 				if (!retValue && userEnteredInc.VerifiedReleaseId != originalInc.VerifiedReleaseId)
 					retValue = (originalInc.VerifiedReleaseId == serverModdedInc.VerifiedReleaseId);
 
@@ -312,7 +313,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				retRequirement.ImportanceId = ((userSaved.ImportanceId == original.ImportanceId) ? serverModded.ImportanceId : userSaved.ImportanceId);
 				retRequirement.Name = ((userSaved.Name == original.Name) ? serverModded.Name : userSaved.Name);
 				retRequirement.OwnerId = ((userSaved.OwnerId == original.OwnerId) ? serverModded.OwnerId : userSaved.OwnerId);
-				retRequirement.PlannedEffort = ((userSaved.PlannedEffort == original.PlannedEffort) ? serverModded.PlannedEffort : userSaved.PlannedEffort);
+				//retRequirement.PlannedEffort = ((userSaved.PlannedEffort == original.PlannedEffort) ? serverModded.PlannedEffort : userSaved.PlannedEffort);
 				retRequirement.ReleaseId = ((userSaved.ReleaseId == original.ReleaseId) ? serverModded.ReleaseId : userSaved.ReleaseId);
 				retRequirement.StatusId = ((userSaved.StatusId == original.StatusId) ? serverModded.StatusId : userSaved.StatusId);
 
@@ -405,7 +406,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				retIncident.ResolvedReleaseId = ((userSaved.ResolvedReleaseId == original.ResolvedReleaseId) ? serverModded.ResolvedReleaseId : userSaved.ResolvedReleaseId);
 				retIncident.SeverityId = ((userSaved.SeverityId == original.SeverityId) ? serverModded.SeverityId : userSaved.SeverityId);
 				retIncident.StartDate = ((userSaved.StartDate == original.StartDate) ? serverModded.StartDate : userSaved.StartDate);
-				retIncident.TestRunStepId = ((userSaved.TestRunStepId == original.TestRunStepId) ? serverModded.TestRunStepId : userSaved.TestRunStepId);
+				//retIncident.TestRunStepId = ((userSaved.TestRunStepId == original.TestRunStepId) ? serverModded.TestRunStepId : userSaved.TestRunStepId);
 				retIncident.VerifiedReleaseId = ((userSaved.VerifiedReleaseId == original.VerifiedReleaseId) ? serverModded.VerifiedReleaseId : userSaved.VerifiedReleaseId);
 
 				//Custom Properties

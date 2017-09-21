@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A9537D2-58B7-4A53-9B53-3E0C0B119508}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,9 +26,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.ToolKit", "WPFControls\Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.ToolKit.csproj", "{72E591D6-8F83-4D8C-8F67-9C325E623234}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -63,13 +60,13 @@ Global
 		{72E591D6-8F83-4D8C-8F67-9C325E623234} = {6C6F4308-7A1A-4D8E-8FD2-9355E89BAE87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_AssemblyInfoFilename = SharedAssemblyInfo.cs
-		BuildVersion_UseGlobalSettings = False
-		BuildVersion_BuildVersioningStyle = None.None.None.DeltaBaseDate
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_StartDate = 2000/1/1
-		BuildVersion_ConfigurationName = Release
 		BuildVersion_DetectChanges = False
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_StartDate = 2000/1/1
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.None.DeltaBaseDate
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_AssemblyInfoFilename = SharedAssemblyInfo.cs
 	EndGlobalSection
 EndGlobal

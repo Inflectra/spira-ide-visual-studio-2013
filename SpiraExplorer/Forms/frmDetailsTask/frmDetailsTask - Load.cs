@@ -15,7 +15,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
     public partial class frmDetailsTask : UserControl
     {
         #region Client Values
-        private ImportExportClient _client;
+        private SoapServiceClient _client;
         private int _clientNumRunning; //Holds the number current executing.
         private int _clientNum; //Holds the total amount. Needed to multiple ASYNC() calls.
         #endregion
@@ -248,7 +248,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit when we're finished getting our project users.</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">Project_RetrieveUserMembershipCompletedEventArgs</param>
         private void _client_Project_RetrieveUserMembershipCompleted(object sender, Project_RetrieveUserMembershipCompletedEventArgs e)
         {
@@ -294,7 +294,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit when we're finished getting our project releases.</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">Release_RetrieveCompletedEventArgs</param>
         private void _client_Release_RetrieveCompleted(object sender, Release_RetrieveCompletedEventArgs e)
         {
@@ -388,7 +388,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit when we're finished getting the attached documents for the artifact.</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">Document_RetrieveForArtifactCompletedEventArgs</param>
         private void _client_Document_RetrieveForArtifactCompleted(object sender, Document_RetrieveForArtifactCompletedEventArgs e)
         {
@@ -425,7 +425,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit when the client returns with our needed URL</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">System_GetArtifactUrlCompletedEventArgs</param>
         private void _client_System_GetArtifactUrlCompleted(object sender, System_GetArtifactUrlCompletedEventArgs e)
         {
@@ -473,7 +473,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit when the client's finished getting out comments for this task.</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">Task_RetrieveCommentsCompletedEventArgs</param>
         private void _client_Task_RetrieveCommentsCompleted(object sender, Task_RetrieveCommentsCompletedEventArgs e)
         {
@@ -520,7 +520,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit when the client finished getting out task information.</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">Task_RetrieveByIdCompletedEventArgs</param>
         private void _client_Task_RetrieveByIdCompleted(object sender, Task_RetrieveByIdCompletedEventArgs e)
         {
@@ -589,7 +589,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         }
 
         /// <summary>Hit if there's a requirement assigned to the task.</summary>
-        /// <param name="sender">ImportExportClient</param>
+        /// <param name="sender">SoapServiceClient</param>
         /// <param name="e">Requirement_RetrieveByIdCompletedEventArgs</param>
         private void _client_Requirement_RetrieveByIdCompleted(object sender, Requirement_RetrieveByIdCompletedEventArgs e)
         {

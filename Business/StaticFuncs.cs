@@ -113,9 +113,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 		/// <summary>Creates a web client for use.</summary>
 		/// <param name="serverAddress">The base address of the server.</param>
 		/// <returns>ImportExportClient</returns>
-		public static ImportExportClient CreateClient(string serverAddress)
+		public static SoapServiceClient CreateClient(string serverAddress)
 		{
-			ImportExportClient retClient = null;
+            SoapServiceClient retClient = null;
 
 			try
 			{
@@ -154,7 +154,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 					Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.Spira_ImportExport.PermissiveCertificatePolicy.Enact("");
 				}
 
-				retClient = new SpiraTeam_Client.ImportExportClient(wsDualHttp, EndPtAddr);
+				retClient = new SpiraTeam_Client.SoapServiceClient(wsDualHttp, EndPtAddr);
 			}
 			catch (Exception ex)
 			{

@@ -169,14 +169,14 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 			{
 				try
 				{
-					ImportExportClient client = StaticFuncs.CreateClient(this.ServerURL.ToString());
+					SoapServiceClient client = StaticFuncs.CreateClient(this.ServerURL.ToString());
 
 					//Connect and get the project information.
 					if (client.Connection_Authenticate2(this.UserName, this.UserPass, StaticFuncs.getCultureResource.GetString("app_ReportName")))
 					{
 						//Connected, get project and user information.
 						this.ProjectName = client.Project_RetrieveById(this.ProjectID).Name;
-						this.UserID = client.User_RetrieveByUserName(this.UserName).UserId.Value;
+						this.UserID = client.User_RetrieveByUserName(this.UserName, false).UserId.Value;
 					}
 				}
 				catch
