@@ -18,7 +18,7 @@ using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
 	/// <summary>Interaction logic for cntlSpiraExplorer.xaml</summary>
-	public partial class cntlSpiraExplorer : UserControl, IVsPersistSolutionOpts
+	public partial class cntlSpiraExplorer : UserControl, IVsPersistSolutionOpts, IVsPersistSolutionProps
     {
 		#region Internal Vars
 		string _solutionName;
@@ -416,6 +416,117 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                     hashSpiraUserData["spiraPassword"] = SpiraContext.Password;
                 }
             }
+
+            return VSConstants.S_OK;
+        }
+
+        #endregion
+
+        #region  IVsPersistSolutionProps
+
+        /// <summary>
+        /// This function is called by the IDE to determine if something needs to be saved in the solution.
+        /// If the package returns that it has dirty properties, the shell will callback on SaveSolutionProps
+        /// </summary>
+        /// <param name="pHierarchy"></param>
+        /// <param name="pqsspSave"></param>
+        /// <returns></returns>
+        public int QuerySaveSolutionProps(IVsHierarchy pHierarchy, VSQUERYSAVESLNPROPS[] pqsspSave)
+        {
+            if (pHierarchy == null)
+            {
+
+                VSQUERYSAVESLNPROPS result = VSQUERYSAVESLNPROPS.QSP_HasNoProps;
+
+                if (SpiraContext.IsDirty)
+                {
+                    result = VSQUERYSAVESLNPROPS.QSP_HasDirtyProps;
+                }
+                else if (!SpiraContext.HasSolutionProps)
+                {
+                    result = VSQUERYSAVESLNPROPS.QSP_HasNoProps;
+                }
+                else
+                    result = VSQUERYSAVESLNPROPS.QSP_HasNoDirtyProps;
+                pqsspSave[0] = result;
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        /// <summary>
+        /// This function gets called by the shell after QuerySaveSolutionProps returned QSP_HasDirtyProps
+        /// </summary>
+        /// <param name="pHierarchy"></param>
+        /// <param name="pPersistence"></param>
+        /// <returns></returns>
+        public int SaveSolutionProps(IVsHierarchy pHierarchy, IVsSolutionPersistence pPersistence)
+        {
+            // The package will pass in the key under which it wants to save its properties, 
+            // and the IDE will call back on WriteSolutionProps
+
+            // The properties will be saved in the Pre-Load section
+            // When the solution will be reopened, the IDE will call our package to load them back before the projects in the solution are actually open
+            // This could help if the source control package needs to persist information like projects translation tables, that should be read from the suo file
+            // and should be available by the time projects are opened and the shell start calling IVsSccEnlistmentPathTranslation functions.
+            if (pHierarchy == null) // Only save the property on the solution itself
+            {
+                // SavePackageSolutionProps will call WriteSolutionProps with the specified key
+
+                if (SpiraContext.HasSolutionProps)
+                    pPersistence.SavePackageSolutionProps(1 /* TRUE */, null, this, _strSolutionPersistanceKey);
+
+                // Once we saved our props, the solution is not dirty anymore
+                SpiraContext.SolutionPropsSaved();
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int WriteSolutionProps(IVsHierarchy pHierarchy, string pszKey, IPropertyBag pPropBag)
+        {
+            if (pHierarchy != null)
+                return VSConstants.S_OK; // Not send by our code!
+            else if (pPropBag == null)
+                return VSConstants.E_POINTER;
+
+            pPropBag.Write("spiraUrl", SpiraContext.BaseUri.ToString());
+            pPropBag.Write("spiraProjectId", SpiraContext.ProjectId);
+
+            return VSConstants.S_OK;
+        }
+
+        public int ReadSolutionProps(IVsHierarchy pHierarchy, string pszProjectName, string pszProjectMk, string pszKey, int fPreLoad, IPropertyBag pPropBag)
+        {
+            if (pHierarchy != null)
+                return VSConstants.S_OK;
+
+            object absoluteUri;
+            object projectId;
+            pPropBag.Read("spiraUrl", out absoluteUri, null, 0, null);
+            pPropBag.Read("spiraProjectId", out projectId, null, 0, null);
+            if (absoluteUri != null)
+            {
+                SpiraContext.BaseUri = new Uri((string)absoluteUri);
+
+                //We don't want it marked as dirty yet
+                SpiraContext.SolutionPropsSaved();
+            }
+            if (projectId != null)
+            {
+                SpiraContext.ProjectId = (int)projectId;
+
+                //We don't want it marked as dirty yet
+                SpiraContext.SolutionPropsSaved();
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int OnProjectLoadFailure(IVsHierarchy pStubHierarchy, string pszProjectName, string pszProjectMk, string pszKey)
+        {
+            // We should save our settings again
+            SpiraContext.SetUnsavedChanges(); 
 
             return VSConstants.S_OK;
         }

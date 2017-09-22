@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/26096332/is-it-possible-to-write-the-current-vs-solution-file-from-a-vs-package-without-hs
+
+https://stackoverflow.com/questions/9281662/how-to-debug-visual-studio-extensions

@@ -11,13 +11,24 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
     /// </summary>
     public static class SpiraContext
     {
+        private static bool isDirty = false;
+        private static Uri baseUri = null;
+        private static int projectId = 0;
+
         /// <summary>
         /// The base Url for SpiraTeam (stored in the .sln file)
         /// </summary>
         public static Uri BaseUri
         {
-            get;
-            set;
+            get
+            {
+                return baseUri;
+            }
+            set
+            {
+                baseUri = value;
+                isDirty = true;
+            }
         }
 
         /// <summary>
@@ -43,9 +54,53 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
         /// </summary>
         public static int ProjectId
         {
-            get;
-            set;
+            get
+            {
+                return projectId;
+            }
+            set
+            {
+                projectId = value;
+                isDirty = true;
+            }
         }
 
+        /// <summary>
+        /// Do we have unsaved .SLN property changes
+        /// </summary>
+        public static bool IsDirty
+        {
+            get
+            {
+                return isDirty;
+            }
+        }
+
+        /// <summary>
+        /// Do we have the values for project and/or URL initialized
+        /// </summary>
+        public static bool HasSolutionProps
+        {
+            get
+            {
+                return (baseUri != null || projectId > 0);
+            }
+        }
+
+        /// <summary>
+        /// Tells us that the data has been saved
+        /// </summary>
+        public static void SolutionPropsSaved()
+        {
+            isDirty = false;
+        }
+
+        /// <summary>
+        /// Tells us that we have unsaved changes
+        /// </summary>
+        public static void SetUnsavedChanges()
+        {
+            isDirty = true;
+        }
     }
 }
