@@ -6,6 +6,7 @@ using Inflectra.Global;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SpiraTeam_Client;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Properties;
+using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
@@ -18,35 +19,32 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		private List<TreeViewArtifact> _Projects = new List<TreeViewArtifact>();
 		private int _numActiveClients = 0;
 
-		/// <summary>Loads a new set of projects into the treeview.</summary>
-		/// <param name="ProjList">A field-seperated list of project id's.</param>
-		private void loadProjects(string ProjList)
+        /// <summary>Loads a Spira project into the treeview.</summary>
+        /// <param name="projectId">The id of the project</param>
+        private void loadProject(int projectId)
 		{
 			try
 			{
 				//Get our list of projects.
 				this._Projects.Clear();
-				if (!string.IsNullOrEmpty(ProjList))
+				if (projectId > 0)
 				{
-					foreach (string strProj in ProjList.Split(Business.SpiraProject.CHAR_RECORD))
-					{
-						TreeViewArtifact newProj = new TreeViewArtifact(this.refreshTreeNodeServerData);
-						newProj.ArtifactTag = Business.SpiraProject.GenerateFromString(strProj);
-						newProj.ArtifactId = ((Business.SpiraProject)newProj.ArtifactTag).ProjectID;
-						newProj.ArtifactName = ((Business.SpiraProject)newProj.ArtifactTag).ProjectName;
-						newProj.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Project;
-						newProj.ArtifactIsFolder = true;
-						newProj.Parent = null;
+                    //Instantiate the new project (it will query the server and get the project name, etc.)
+                    SpiraProject spiraProject = new SpiraProject(SpiraContext.Login, SpiraContext.Password, SpiraContext.BaseUri, SpiraContext.ProjectId);
 
-						this._Projects.Add(newProj);
-					}
+                    TreeViewArtifact newProj = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                    newProj.ArtifactTag = spiraProject;
+					newProj.ArtifactId = ((Business.SpiraProject)newProj.ArtifactTag).ProjectId;
+					newProj.ArtifactName = ((Business.SpiraProject)newProj.ArtifactTag).ProjectName;
+					newProj.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Project;
+					newProj.ArtifactIsFolder = true;
+					newProj.Parent = null;
+
+					this._Projects.Add(newProj);
 				}
 
 				//Refresh the treeview.
 				this.refreshProjects();
-
-				//Enable the control buttons.
-				this.btnShowClosed.IsEnabled = true;
 			}
 			catch (Exception ex)
 			{
@@ -162,57 +160,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					folderTskMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Task;
 					folderTskMy.ArtifactIsFolderMine = true;
 
-					if (Settings.Default.ShowUnassigned)
-					{
-						//In this case, we need to create different root folders, as well as Unassigned folders.
-						//Create real roots.
-						TreeViewArtifact folderInc = new TreeViewArtifact(this.refreshTreeNodeServerData) { ArtifactIsFolder = true, Parent = trvProj, ArtifactName = StaticFuncs.getCultureResource.GetString("app_Tree_Incidents") };
-						TreeViewArtifact folderReq = new TreeViewArtifact(this.refreshTreeNodeServerData) { ArtifactIsFolder = true, Parent = trvProj, ArtifactName = StaticFuncs.getCultureResource.GetString("app_Tree_Requirements") };
-						TreeViewArtifact folderTsk = new TreeViewArtifact(this.refreshTreeNodeServerData) { ArtifactIsFolder = true, Parent = trvProj, ArtifactName = StaticFuncs.getCultureResource.GetString("app_Tree_Tasks") };
+					folderIncMy.Parent = trvProj;
+					folderReqMy.Parent = trvProj;
+					folderTskMy.Parent = trvProj;
 
-						//Create unassigned nodes.
-						TreeViewArtifact folderIncUn = new TreeViewArtifact(this.refreshTreeNodeServerData);
-						folderIncUn.ArtifactIsFolder = true;
-						folderIncUn.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_Unassigned"), StaticFuncs.getCultureResource.GetString("app_Tree_Incidents"));
-						folderIncUn.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Incident;
-						folderIncUn.Parent = folderInc;
-						TreeViewArtifact folderReqUn = new TreeViewArtifact(this.refreshTreeNodeServerData);
-						folderReqUn.ArtifactIsFolder = true;
-						folderReqUn.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_Unassigned"), StaticFuncs.getCultureResource.GetString("app_Tree_Requirements"));
-						folderReqUn.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Requirement;
-						folderReqUn.Parent = folderReq;
-						TreeViewArtifact folderTskUn = new TreeViewArtifact(this.refreshTreeNodeServerData);
-						folderTskUn.ArtifactIsFolder = true;
-						folderTskUn.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_Unassigned"), StaticFuncs.getCultureResource.GetString("app_Tree_Tasks"));
-						folderTskUn.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Task;
-						folderTskUn.Parent = folderTsk;
-
-						//Add them to their parents and to the project.
-						folderIncMy.Parent = folderInc;
-						folderReqMy.Parent = folderReq;
-						folderTskMy.Parent = folderTsk;
-
-						folderInc.Items.Add(folderIncMy);
-						folderInc.Items.Add(folderIncUn);
-						folderReq.Items.Add(folderReqMy);
-						folderReq.Items.Add(folderReqUn);
-						folderTsk.Items.Add(folderTskMy);
-						folderTsk.Items.Add(folderTskUn);
-
-						trvProj.Items.Add(folderInc);
-						trvProj.Items.Add(folderReq);
-						trvProj.Items.Add(folderTsk);
-					}
-					else
-					{
-						folderIncMy.Parent = trvProj;
-						folderReqMy.Parent = trvProj;
-						folderTskMy.Parent = trvProj;
-
-						trvProj.Items.Add(folderIncMy);
-						trvProj.Items.Add(folderReqMy);
-						trvProj.Items.Add(folderTskMy);
-					}
+					trvProj.Items.Add(folderIncMy);
+					trvProj.Items.Add(folderReqMy);
+					trvProj.Items.Add(folderTskMy);
 
 					//Now, refresh the project.
 					this.refreshTreeNodeServerData(trvProj);
@@ -546,7 +500,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				{
 					//Everything is okay so far, fire off connecting to the project.
 					this._numActiveClients++;
-					wktimeClient.Connection_ConnectToProjectAsync(((SpiraProject)treeArt.ArtifactParentProject.ArtifactTag).ProjectID, e.UserState);
+					wktimeClient.Connection_ConnectToProjectAsync(((SpiraProject)treeArt.ArtifactParentProject.ArtifactTag).ProjectId, e.UserState);
 				}
 				else
 				{
@@ -658,13 +612,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strMyIncident.ToLowerInvariant().Trim())
 							{
 								//Send this client off to get all incidents assigned to User.
-								client.Client.Incident_RetrieveAsync(Spira_ImportExport.GenerateFilter(((SpiraProject)nodeProject.ArtifactTag).UserID, Settings.Default.ShowCompleted, "IN"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
+								client.Client.Incident_RetrieveAsync(Spira_ImportExport.GenerateFilter(((SpiraProject)nodeProject.ArtifactTag).UserID, false, "IN"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
 							}
 							else if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strUnIncident.ToLowerInvariant().Trim())
 							{
 								//This will only be hit if they have Unassigned incidents displayed. Otherwise,
 								//  this whole section isn't run. No need to check the setting here.
-								client.Client.Incident_RetrieveAsync(Spira_ImportExport.GenerateFilter(-999, Settings.Default.ShowCompleted, "IN"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
+								client.Client.Incident_RetrieveAsync(Spira_ImportExport.GenerateFilter(-999, false, "IN"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
 							}
 							else
 							{
@@ -682,13 +636,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strMyRequirement.ToLowerInvariant().Trim())
 							{
 								//Send this client off to get all incidents assigned to User.
-								client.Client.Requirement_RetrieveAsync(Spira_ImportExport.GenerateFilter(((SpiraProject)nodeProject.ArtifactTag).UserID, Settings.Default.ShowCompleted, "RQ"), 1, 999999, client.ClientNode);
+								client.Client.Requirement_RetrieveAsync(Spira_ImportExport.GenerateFilter(((SpiraProject)nodeProject.ArtifactTag).UserID, false, "RQ"), 1, 999999, client.ClientNode);
 							}
 							else if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strUnRequirement.ToLowerInvariant().Trim())
 							{
 								//This will only be hit if they have Unassigned incidents displayed. Otherwise,
 								//  this whole section isn't run. No need to check the setting here.
-								client.Client.Requirement_RetrieveAsync(Spira_ImportExport.GenerateFilter(-999, Settings.Default.ShowCompleted, "RQ"), 1, 99999, client.ClientNode);
+								client.Client.Requirement_RetrieveAsync(Spira_ImportExport.GenerateFilter(-999, false, "RQ"), 1, 99999, client.ClientNode);
 							}
 							else
 							{
@@ -706,13 +660,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strMyTask.ToLowerInvariant().Trim())
 							{
 								//Send this client off to get all incidents assigned to User.
-								client.Client.Task_RetrieveAsync(Spira_ImportExport.GenerateFilter(((SpiraProject)nodeProject.ArtifactTag).UserID, Settings.Default.ShowCompleted, "TK"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
+								client.Client.Task_RetrieveAsync(Spira_ImportExport.GenerateFilter(((SpiraProject)nodeProject.ArtifactTag).UserID, false, "TK"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
 							}
 							else if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strUnTask.ToLowerInvariant().Trim())
 							{
 								//This will only be hit if they have Unassigned incidents displayed. Otherwise,
 								//  this whole section isn't run. No need to check the setting here.
-								client.Client.Task_RetrieveAsync(Spira_ImportExport.GenerateFilter(-999, Settings.Default.ShowCompleted, "TK"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
+								client.Client.Task_RetrieveAsync(Spira_ImportExport.GenerateFilter(-999, false, "TK"), Spira_ImportExport.GenerateSort(), 1, 99999, client.ClientNode);
 							}
 							else
 							{
@@ -904,7 +858,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this.trvProject.Cursor = System.Windows.Input.Cursors.Arrow;
 				this.trvProject.Items.Refresh();
 				this.btnRefresh.IsEnabled = false;
-				this.btnShowClosed.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
@@ -923,7 +876,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this.barLoading.Visibility = Visibility.Collapsed;
 				this.trvProject.Cursor = System.Windows.Input.Cursors.Arrow;
 				this.trvProject.Items.Refresh();
-				this.btnShowClosed.IsEnabled = false;
 				this.btnRefresh.IsEnabled = false;
 			}
 			catch (Exception ex)

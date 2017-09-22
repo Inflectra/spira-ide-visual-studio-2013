@@ -12,3 +12,8 @@ Changelog:
 ---------------
 ! Fixed color settings for display in custom themes. 
 ! Corrected install to allow VS2013 and VS2015.
+
+5.0.0.* (09/22/2017)
+---------------
+! Updated to use new Spira 5.x API
+! Changed to store settings in .sln and .suo file

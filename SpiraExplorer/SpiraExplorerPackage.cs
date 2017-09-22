@@ -46,17 +46,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
             //Upgrade existing settings,
             Settings.Default.Upgrade();
 
-            //Get settings ready..
-            if (Settings.Default.AssignedProjects == null)
-            {
-                Settings.Default.AssignedProjects = new Business.SerializableDictionary<string, string>();
-                Settings.Default.Save();
-            }
-            if (Settings.Default.AllProjects == null)
-            {
-                Settings.Default.AllProjects = new Business.SerializableList<string>();
-                Settings.Default.Save();
-            }
             if (SpiraExplorerPackage._windowDetails == null)
             {
                 SpiraExplorerPackage._windowDetails = new Dictionary<TreeViewArtifact, int>();
@@ -134,7 +123,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
                 {
                     this._SolEvents.Opened += new EnvDTE._dispSolutionEvents_OpenedEventHandler(SolutionEvents_Opened);
                     this._SolEvents.AfterClosing += new EnvDTE._dispSolutionEvents_AfterClosingEventHandler(SolutionEvents_AfterClosing);
-                    this._SolEvents.Renamed += new EnvDTE._dispSolutionEvents_RenamedEventHandler(SolutionEvents_Renamed);
                 }
             }
             catch (Exception ex)
@@ -146,47 +134,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
         #endregion
 
         #region Environment Events
-        /// <summary>Hit when an open solution is renamed.</summary>
-        /// <param name="OldName">The old name of the solution.</param>
-        private void SolutionEvents_Renamed(string OldName)
-        {
-            try
-            {
-                //Get the new name of the solution..
-                if (Business.StaticFuncs.GetEnvironment.Solution.IsOpen)
-                {
-                    string NewName = (string)Business.StaticFuncs.GetEnvironment.Solution.Properties.Item("Name").Value;
-                    if (!string.IsNullOrWhiteSpace(NewName))
-                    {
-                        //Modify the settings to transfer over projects.
-                        if (Settings.Default.AssignedProjects.ContainsKey(OldName))
-                        {
-                            string strAssignedProjects = Settings.Default.AssignedProjects[OldName];
-                            Settings.Default.AssignedProjects.Remove(OldName);
-                            if (Settings.Default.AssignedProjects.ContainsKey(NewName))
-                                Settings.Default.AssignedProjects[NewName] = strAssignedProjects;
-                            else
-                                Settings.Default.AssignedProjects.Add(NewName, strAssignedProjects);
-                            Settings.Default.Save();
-                        }
 
-                        //Reload projects..
-                        ToolWindowPane window = this.FindToolWindow(typeof(toolSpiraExplorer), 0, false);
-                        if (window != null)
-                        {
-                            cntlSpiraExplorer toolWindow = (cntlSpiraExplorer)window.Content;
-                            toolWindow.loadSolution(NewName);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.LogMessage(ex, "SolutionEvents_Renamed()");
-                MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+ 
         /// <summary>Hit when the open solution is closed.</summary>
         private void SolutionEvents_AfterClosing()
         {

@@ -156,7 +156,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					{
 						//Connect to our project.
 						this._clientNumRunning++;
-						this._client.Connection_ConnectToProjectAsync(((SpiraProject)this._ArtifactDetails.ArtifactParentProject.ArtifactTag).ProjectID, this._clientNum++);
+						this._client.Connection_ConnectToProjectAsync(((SpiraProject)this._ArtifactDetails.ArtifactParentProject.ArtifactTag).ProjectId, this._clientNum++);
 					}
 					else
 					{
@@ -219,7 +219,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 						this._client.CustomProperty_RetrieveCustomListsAsync(this._clientNum++);
 						this._client.CustomProperty_RetrieveForArtifactTypeAsync(3, false, this._clientNum++);
 						this._client.Release_RetrieveAsync(true, this._clientNum++);
-						this._client.System_GetArtifactUrlAsync(-14, this._Project.ProjectID, -2, null, this._clientNum++);
+						this._client.System_GetArtifactUrlAsync(-14, this._Project.ProjectId, -2, null, this._clientNum++);
 						this._client.Incident_RetrievePrioritiesAsync(this._clientNum++);
 						this._client.Incident_RetrieveSeveritiesAsync(this._clientNum++);
 						this._client.Incident_RetrieveStatusesAsync(this._clientNum++);
@@ -613,7 +613,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 						this._client.Incident_RetrieveWorkflowTransitionsAsync(this._Incident.IncidentTypeId.Value, this._Incident.IncidentStatusId.Value, (this._Incident.OpenerId == this._Project.UserID), (this._Incident.OwnerId == this._Project.UserID), this._clientNum++);
 						this._client.Incident_RetrieveWorkflowCustomPropertiesAsync(this._Incident.IncidentTypeId.Value, this._Incident.IncidentStatusId.Value, this._clientNum++);
 						this._client.Document_RetrieveForArtifactAsync(3, this._Incident.IncidentId.Value, new List<RemoteFilter>(), new RemoteSort(), this._clientNum++);
-						this._client.System_GetArtifactUrlAsync(3, this._Project.ProjectID, this._Incident.IncidentId.Value, null, this._clientNum++);
+						this._client.System_GetArtifactUrlAsync(3, this._Project.ProjectId, this._Incident.IncidentId.Value, null, this._clientNum++);
 					}
 					else
 					{

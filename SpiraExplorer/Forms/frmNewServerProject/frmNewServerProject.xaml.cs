@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Inflectra.Global;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SpiraTeam_Client;
+using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
@@ -52,7 +53,20 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				int num = this.cmbProjectList.Items.Add("-- No Projects Available --");
 				this.cmbProjectList.SelectedIndex = num;
 				this.cmbProjectList.SelectionChanged += new SelectionChangedEventHandler(cmbProjectList_SelectionChanged);
-			}
+
+                //See if we have initial values to load in for this solution
+                if (SpiraContext.HasSolutionProps)
+                {
+                    this.txbServer.Text = SpiraContext.BaseUri.ToString();
+                    this.txbUserID.Text = SpiraContext.Login;
+                    this.txbUserPass.Password = SpiraContext.Password;                    
+                }
+                //if (this.cmbProjectList.SelectedItem.GetType() == typeof(Business.SpiraProject))
+                //{
+                //    Business.SpiraProject spiraProject = (Business.SpiraProject)cmbProjectList.SelectedItem;
+                //    SpiraContext.ProjectId = spiraProject.ProjectId;
+                //}
+            }
 			catch (Exception ex)
 			{
 				Logger.LogMessage(ex, "InitializeComponent()");
@@ -201,7 +215,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 								foreach (RemoteProject RemoteProj in evt.Result)
 								{
 									Business.SpiraProject Project = new Business.SpiraProject();
-									Project.ProjectID = RemoteProj.ProjectId.Value;
+									Project.ProjectId = RemoteProj.ProjectId.Value;
 									Project.ServerURL = new Uri(this.txbServer.Text);
 									Project.UserName = this.txbUserID.Text;
 									Project.UserPass = this.txbUserPass.Password;
@@ -261,7 +275,18 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			try
 			{
 				e.Handled = true;
-				this.DialogResult = true;
+
+                //Set the SpiraContext values
+                SpiraContext.BaseUri = new Uri(this.txbServer.Text.Trim());
+                SpiraContext.Login = this.txbUserID.Text.Trim();
+                SpiraContext.Password = this.txbUserPass.Password.Trim();
+                if (this.cmbProjectList.SelectedItem.GetType() == typeof(Business.SpiraProject))
+                {
+                    Business.SpiraProject spiraProject = (Business.SpiraProject)cmbProjectList.SelectedItem;
+                    SpiraContext.ProjectId = spiraProject.ProjectId;
+                }
+
+                this.DialogResult = true;
 			}
 			catch (Exception ex)
 			{

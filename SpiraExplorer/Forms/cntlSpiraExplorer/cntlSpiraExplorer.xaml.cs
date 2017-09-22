@@ -54,11 +54,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				Image btnConfigImage = Business.StaticFuncs.getImage("imgProject", new Size(16, 16));
 				btnConfigImage.Stretch = Stretch.None;
 				this.btnConfig.Content = btnConfigImage;
-				// - Show Completed button
-				Image btnCompleteImage = Business.StaticFuncs.getImage("imgShowCompleted", new Size(16, 16));
-				btnCompleteImage.Stretch = Stretch.None;
-				this.btnShowClosed.Content = btnCompleteImage;
-				this.btnShowClosed.IsChecked = Settings.Default.ShowCompleted;
 				// - Refresh Button
 				Image btnRefreshImage = Business.StaticFuncs.getImage("imgRefresh", new Size(16, 16));
 				btnRefreshImage.Stretch = Stretch.None;
@@ -148,35 +143,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			catch (Exception ex)
 			{
 				Logger.LogMessage(ex, "btnRefresh_Click()");
-				MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-		}
-
-		/// <summary>Hit when the user wants to show/not show closed items.</summary>
-		/// <param name="sender">TobbleButton</param>
-		/// <param name="e">RoutedEventArgs</param>
-		private void btnShowClosed_Click(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				e.Handled = true;
-
-				//We need to save the setting here.
-				Settings.Default.ShowCompleted = this.btnShowClosed.IsChecked.Value;
-				Settings.Default.Save();
-
-				//Clear out all children..
-				foreach (TreeViewArtifact trvProject in this._Projects)
-				{
-					trvProject.Items.Clear();
-				}
-
-				//Refresh the item list.
-				this.refreshProjects();
-			}
-			catch (Exception ex)
-			{
-				Logger.LogMessage(ex, "btnShowClosed_Click()");
 				MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
@@ -287,17 +253,16 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					//Only get the projects if the solution name changed. (Avoid refreshing when solution name is unchanged.)
 					if (this._solutionName != solName || force)
 					{
-                        //Access the SUO file to get the associated Spira URL, credentials and project
+                        //Access the SLN/SUO file to get the associated Spira URL, credentials and project
                         //If none available, display message
-                        //TODO: ADAM
-						//Get projects associated with this solution.
-						SerializableDictionary<string, string> availProjects = Settings.Default.AssignedProjects;
-						if (availProjects != null && availProjects.ContainsKey(solName) && !string.IsNullOrWhiteSpace(availProjects[solName]))
-							this.loadProjects(availProjects[solName]);
-						else
-						{
-							this.noProjectsLoaded();
-						}
+                        if (SpiraContext.HasSolutionProps)
+                        {
+                            this.loadProject(SpiraContext.ProjectId);
+                        }
+                        else
+                        {
+                            this.noProjectsLoaded();
+                        }
 						this._solutionName = solName;
 					}
 				}

@@ -24,7 +24,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 		public string UserName;
 		public string UserPass;
 		public int UserID = -1;
-		public int ProjectID;
+		public int ProjectId;
 		public string ProjectName = "Project";
 
 		#region Initializer Methods
@@ -46,7 +46,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 			this.UserName = UserName;
 			this.UserPass = UserPass;
 			this.ServerURL = ServerURI;
-			this.ProjectID = ProjectID;
+			this.ProjectId = ProjectID;
 
 			//Get the name and userID. This will take care of the rest.
 			this.refreshProject();
@@ -65,7 +65,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 			this.UserName = UserName;
 			this.UserPass = UserPass;
 			this.ServerURL = ServerURI;
-			this.ProjectID = ProjectID;
+			this.ProjectId = ProjectID;
 			this.ProjectName = ProjectName;
 			this.UserID = UserID;
 
@@ -93,7 +93,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 		{
 			if (this.ServerURL.AbsoluteUri.Trim() == inProject.ServerURL.AbsoluteUri.Trim() &&
 				this.UserName == inProject.UserName &&
-				this.ProjectID == inProject.ProjectID)
+				this.ProjectId == inProject.ProjectId)
 				return true;
 			else
 				return false;
@@ -136,7 +136,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				return inProject.UserName + SpiraProject.CHAR_FIELD +
 					inProject.UserPass + SpiraProject.CHAR_FIELD +
 					inProject.ServerURL.AbsoluteUri + SpiraProject.CHAR_FIELD +
-					inProject.ProjectID.ToString() + SpiraProject.CHAR_FIELD +
+					inProject.ProjectId.ToString() + SpiraProject.CHAR_FIELD +
 					inProject.ProjectName + SpiraProject.CHAR_FIELD +
 					inProject.UserID.ToString();
 			}
@@ -154,7 +154,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 		{
 			if (inProject2.ServerURL.AbsoluteUri.Trim() == inProject1.ServerURL.AbsoluteUri.Trim() &&
 				inProject2.UserName == inProject1.UserName &&
-				inProject2.ProjectID == inProject1.ProjectID)
+				inProject2.ProjectId == inProject1.ProjectId)
 				return true;
 			else
 				return false;
@@ -175,7 +175,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 					if (client.Connection_Authenticate2(this.UserName, this.UserPass, StaticFuncs.getCultureResource.GetString("app_ReportName")))
 					{
 						//Connected, get project and user information.
-						this.ProjectName = client.Project_RetrieveById(this.ProjectID).Name;
+						this.ProjectName = client.Project_RetrieveById(this.ProjectId).Name;
 						this.UserID = client.User_RetrieveByUserName(this.UserName, false).UserId.Value;
 					}
 				}

@@ -138,7 +138,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                     if (e.Error == null && e.Result)
                     {
                         //Connect to our project.
-                        this._client.Connection_ConnectToProjectAsync(((SpiraProject)this._ArtifactDetails.ArtifactParentProject.ArtifactTag).ProjectID, this._clientNum++);
+                        this._client.Connection_ConnectToProjectAsync(((SpiraProject)this._ArtifactDetails.ArtifactParentProject.ArtifactTag).ProjectId, this._clientNum++);
                         this._clientNumRunning++;
                     }
                     else
@@ -203,7 +203,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                         this._client.CustomProperty_RetrieveForArtifactTypeAsync(6, false, this._clientNum++);
                         this._client.CustomProperty_RetrieveCustomListsAsync(this._clientNum++);
                         this._client.Release_RetrieveAsync(true, this._clientNum++);
-                        this._client.System_GetArtifactUrlAsync(-14, this._Project.ProjectID, -2, null, this._clientNum++);
+                        this._client.System_GetArtifactUrlAsync(-14, this._Project.ProjectId, -2, null, this._clientNum++);
                         this._client.Document_RetrieveForArtifactAsync(6, this._ArtifactDetails.ArtifactId, new List<RemoteFilter>(), new RemoteSort());
                         this._client.Task_RetrieveByIdAsync(this._ArtifactDetails.ArtifactId, this._clientNum++);
                         this._client.Task_RetrieveCommentsAsync(this._ArtifactDetails.ArtifactId, this._clientNum++);
