@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
@@ -13,6 +15,9 @@ using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Properties;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.OLE.Interop;
+using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
+using Microsoft.VisualStudio;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 {
@@ -30,13 +35,24 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
     [ProvideToolWindow(typeof(toolSpiraExplorer), MultiInstances = false, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")] // This attribute registers a tool window exposed by this package.
     [ProvideToolWindow(typeof(toolSpiraExplorerDetails), MultiInstances = true, Window = "76C22C24-36B6-4C0C-BF60-FFCB65D1B05B", Transient = false)] // This attribute registers a tool window exposed by this package.
     [Guid(GuidList.guidSpiraExplorerPkgString)]
-    public sealed class SpiraExplorerPackage : Package
+    public sealed class SpiraExplorerPackage : Package, IVsPersistSolutionOpts, IVsPersistSolutionProps
     {
         private EnvDTE.Events _EnvironEvents;
         SolutionEvents _SolEvents;
         public static Dictionary<TreeViewArtifact, int> _windowDetails;
         static int _numWindowIds = -1;
         private static string CLASS = "SpiraExplorerPackage::";
+
+        #region Constants
+
+        // The name of the solution section used to persist provider options (should be unique)
+        private const string _strSolutionPersistanceKey = "SpiraExplorerSolutionProperties";
+
+        // The name of the section in the solution user options file used to persist user-specific options (should be unique, shorter than 31 characters and without dots)
+        private const string _strSolutionUserOptionsKey = "SpiraExplorer";
+
+        #endregion
+
 
         /// <summary>Default constructor of the package. Inside this method you can place any initialization code that does not require any Visual Studio service because at this point the package object is created but not sited yet inside Visual Studio environment. The place to do all the other initialization is the Initialize method.</summary>
         public SpiraExplorerPackage()
@@ -296,5 +312,203 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 
             return retWindow;
         }
+
+        #region IVsPersistSolutionOpts methods
+
+        /// <summary>
+        /// Called by the shell when the SUO file is saved. The provider calls the shell back to let it 
+        /// know which options keys it will use in the suo file.
+        /// </summary>
+        public int SaveUserOptions(IVsSolutionPersistence pPersistence)
+        {
+            // The shell will create a stream for the section of interest, and will call back the provider on 
+            // IVsPersistSolutionProps.WriteUserOptions() to save specific options under the specified key.
+            pPersistence.SavePackageUserOpts(this, _strSolutionUserOptionsKey);
+            return VSConstants.S_OK;
+        }
+
+        /// <summary>
+        /// Called by the shell when a solution is opened and the SUO file is read.
+        /// </summary>
+        public int LoadUserOptions(IVsSolutionPersistence pPersistence, uint grfLoadOpts)
+        {
+            // Note this can be during opening a new solution, or may be during merging of 2 solutions.
+            // The provider calls the shell back to let it know which options keys from the suo file were written by this provider.
+            // If the shell will find in the suo file a section that belong to this package, it will create a stream, 
+            // and will call back the provider on IVsPersistSolutionProps.ReadUserOptions() to read specific options 
+            // under that option key.
+            pPersistence.LoadPackageUserOpts(this, _strSolutionUserOptionsKey);
+            return VSConstants.S_OK;
+        }
+
+        /// <summary>
+        /// Called by the shell to let the package write user options under the specified key.
+        /// </summary>
+        public int WriteUserOptions(IStream pOptionsStream, string pszKey)
+        {
+            // This function gets called by the shell to let the package write user options under the specified key.
+            // The key was declared in SaveUserOptions(), when the shell started saving the suo file.
+            Debug.Assert(pszKey.CompareTo(_strSolutionUserOptionsKey) == 0, "The shell called to read an key that doesn't belong to this package");
+
+            //Add the Spira settings to the hashtable
+            Hashtable hashSpiraUserData = new Hashtable();
+            hashSpiraUserData["spiraLogin"] = SpiraContext.Login;
+            hashSpiraUserData["spiraPassword"] = SpiraContext.Password;
+
+            // The easiest way to read/write the data of interest is by using a binary formatter class
+            // This way, we can write a map of information about projects with one call 
+            // (each element in the map needs to be serializable though)
+            // The alternative is to write binary data in any byte format you'd like using pOptionsStream.Write
+            DataStreamFromComStream pStream = new DataStreamFromComStream(pOptionsStream);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(pStream, hashSpiraUserData);
+
+            return VSConstants.S_OK;
+        }
+
+        /// <summary>
+        /// Called by the shell if the _strSolutionUserOptionsKey section declared in LoadUserOptions() as 
+        /// being written by this package has been found in the suo file
+        /// </summary>
+        public int ReadUserOptions(IStream pOptionsStream, string pszKey)
+        {
+            // This function is called by the shell if the _strSolutionUserOptionsKey section declared
+            // in LoadUserOptions() as being written by this package has been found in the suo file. 
+            // Note this can be during opening a new solution, or may be during merging of 2 solutions.
+            // A good source control provider may need to persist this data until OnAfterOpenSolution or OnAfterMergeSolution is called
+
+            // The easiest way to read/write the data of interest is by using a binary formatter class
+            DataStreamFromComStream pStream = new DataStreamFromComStream(pOptionsStream);
+            Hashtable hashSpiraUserData = new Hashtable();
+            if (pStream.Length > 0)
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                hashSpiraUserData = formatter.Deserialize(pStream) as Hashtable;
+
+                if (hashSpiraUserData.ContainsKey("spiraLogin"))
+                {
+                    hashSpiraUserData["spiraLogin"] = SpiraContext.Login;
+                }
+                if (hashSpiraUserData.ContainsKey("spiraPassword"))
+                {
+                    hashSpiraUserData["spiraPassword"] = SpiraContext.Password;
+                }
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        #endregion
+
+        #region  IVsPersistSolutionProps
+
+        /// <summary>
+        /// This function is called by the IDE to determine if something needs to be saved in the solution.
+        /// If the package returns that it has dirty properties, the shell will callback on SaveSolutionProps
+        /// </summary>
+        /// <param name="pHierarchy"></param>
+        /// <param name="pqsspSave"></param>
+        /// <returns></returns>
+        public int QuerySaveSolutionProps(IVsHierarchy pHierarchy, VSQUERYSAVESLNPROPS[] pqsspSave)
+        {
+            if (pHierarchy == null)
+            {
+
+                VSQUERYSAVESLNPROPS result = VSQUERYSAVESLNPROPS.QSP_HasNoProps;
+
+                if (SpiraContext.IsDirty)
+                {
+                    result = VSQUERYSAVESLNPROPS.QSP_HasDirtyProps;
+                }
+                else if (!SpiraContext.HasSolutionProps)
+                {
+                    result = VSQUERYSAVESLNPROPS.QSP_HasNoProps;
+                }
+                else
+                    result = VSQUERYSAVESLNPROPS.QSP_HasNoDirtyProps;
+                pqsspSave[0] = result;
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        /// <summary>
+        /// This function gets called by the shell after QuerySaveSolutionProps returned QSP_HasDirtyProps
+        /// </summary>
+        /// <param name="pHierarchy"></param>
+        /// <param name="pPersistence"></param>
+        /// <returns></returns>
+        public int SaveSolutionProps(IVsHierarchy pHierarchy, IVsSolutionPersistence pPersistence)
+        {
+            // The package will pass in the key under which it wants to save its properties, 
+            // and the IDE will call back on WriteSolutionProps
+
+            // The properties will be saved in the Pre-Load section
+            // When the solution will be reopened, the IDE will call our package to load them back before the projects in the solution are actually open
+            // This could help if the source control package needs to persist information like projects translation tables, that should be read from the suo file
+            // and should be available by the time projects are opened and the shell start calling IVsSccEnlistmentPathTranslation functions.
+            if (pHierarchy == null) // Only save the property on the solution itself
+            {
+                // SavePackageSolutionProps will call WriteSolutionProps with the specified key
+
+                if (SpiraContext.HasSolutionProps)
+                    pPersistence.SavePackageSolutionProps(1 /* TRUE */, null, this, _strSolutionPersistanceKey);
+
+                // Once we saved our props, the solution is not dirty anymore
+                SpiraContext.SolutionPropsSaved();
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int WriteSolutionProps(IVsHierarchy pHierarchy, string pszKey, IPropertyBag pPropBag)
+        {
+            if (pHierarchy != null)
+                return VSConstants.S_OK; // Not send by our code!
+            else if (pPropBag == null)
+                return VSConstants.E_POINTER;
+
+            pPropBag.Write("spiraUrl", SpiraContext.BaseUri.ToString());
+            pPropBag.Write("spiraProjectId", SpiraContext.ProjectId);
+
+            return VSConstants.S_OK;
+        }
+
+        public int ReadSolutionProps(IVsHierarchy pHierarchy, string pszProjectName, string pszProjectMk, string pszKey, int fPreLoad, IPropertyBag pPropBag)
+        {
+            if (pHierarchy != null)
+                return VSConstants.S_OK;
+
+            object absoluteUri;
+            object projectId;
+            pPropBag.Read("spiraUrl", out absoluteUri, null, 0, null);
+            pPropBag.Read("spiraProjectId", out projectId, null, 0, null);
+            if (absoluteUri != null)
+            {
+                SpiraContext.BaseUri = new Uri((string)absoluteUri);
+
+                //We don't want it marked as dirty yet
+                SpiraContext.SolutionPropsSaved();
+            }
+            if (projectId != null)
+            {
+                SpiraContext.ProjectId = (int)projectId;
+
+                //We don't want it marked as dirty yet
+                SpiraContext.SolutionPropsSaved();
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int OnProjectLoadFailure(IVsHierarchy pStubHierarchy, string pszProjectName, string pszProjectMk, string pszKey)
+        {
+            // We should save our settings again
+            SpiraContext.SetUnsavedChanges();
+
+            return VSConstants.S_OK;
+        }
+
+        #endregion
     }
 }

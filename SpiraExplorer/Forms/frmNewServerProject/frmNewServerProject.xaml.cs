@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -58,14 +59,31 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                 if (SpiraContext.HasSolutionProps)
                 {
                     this.txbServer.Text = SpiraContext.BaseUri.ToString();
-                    this.txbUserID.Text = SpiraContext.Login;
-                    this.txbUserPass.Password = SpiraContext.Password;                    
+                    if (!String.IsNullOrEmpty(SpiraContext.Login) && !String.IsNullOrEmpty(SpiraContext.Password))
+                    {
+                        this.txbUserID.Text = SpiraContext.Login;
+                        this.txbUserPass.Password = SpiraContext.Password;
+
+                        //Start the connections.
+                        this.barProg.IsIndeterminate = true;
+                        this.barProg.Foreground = (Brush)new System.Windows.Media.BrushConverter().ConvertFrom(StaticFuncs.getCultureResource.GetString("app_Colors_StyledBarColor"));
+                        this.grdEntry.IsEnabled = false;
+                        this.btnConnect.Content = "_Cancel";
+                        this.btnConnect.Tag = true;
+                        this.txtStatus.Text = "Connecting to server...";
+                        this.cmbProjectList.Items.Clear();
+                        this.grdAvailProjs.IsEnabled = false;
+
+                        //Create new client.
+                        this._client = StaticFuncs.CreateClient(this.txbServer.Text.Trim());
+                        this._client.Connection_Authenticate2Completed += new EventHandler<Connection_Authenticate2CompletedEventArgs>(_client_CommunicationFinished);
+                        this._client.User_RetrieveByUserNameCompleted += new EventHandler<User_RetrieveByUserNameCompletedEventArgs>(_client_CommunicationFinished);
+                        this._client.Project_RetrieveCompleted += new EventHandler<Project_RetrieveCompletedEventArgs>(_client_CommunicationFinished);
+
+                        this._client.Connection_Authenticate2Async(this.txbUserID.Text, this.txbUserPass.Password, StaticFuncs.getCultureResource.GetString("app_ReportName"));
+
+                    }
                 }
-                //if (this.cmbProjectList.SelectedItem.GetType() == typeof(Business.SpiraProject))
-                //{
-                //    Business.SpiraProject spiraProject = (Business.SpiraProject)cmbProjectList.SelectedItem;
-                //    SpiraContext.ProjectId = spiraProject.ProjectId;
-                //}
             }
 			catch (Exception ex)
 			{
@@ -212,7 +230,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							//Load projects here.
 							if (evt != null && evt.Result.Count > 0)
 							{
-								foreach (RemoteProject RemoteProj in evt.Result)
+                                SpiraProject matchingProject = null;
+                                foreach (RemoteProject RemoteProj in evt.Result)
 								{
 									Business.SpiraProject Project = new Business.SpiraProject();
 									Project.ProjectId = RemoteProj.ProjectId.Value;
@@ -222,8 +241,22 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 									Project.UserID = int.Parse(this.txbUserNum.Text);
 
 									this.cmbProjectList.Items.Add(Project);
-								}
-								this.cmbProjectList.SelectedIndex = 0;
+
+                                    if (SpiraContext.ProjectId == Project.ProjectId)
+                                    {
+                                        matchingProject = Project;
+                                    }
+                                }
+
+                                //Select one if necessary
+                                if (matchingProject != null)
+                                {
+                                    this.cmbProjectList.SelectedItem = matchingProject;
+                                }
+                                else
+                                {
+                                    this.cmbProjectList.SelectedIndex = 0;
+                                }
 								this.grdAvailProjs.IsEnabled = true;
 							}
 							else
