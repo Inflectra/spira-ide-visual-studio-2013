@@ -35,6 +35,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
     [ProvideToolWindow(typeof(toolSpiraExplorer), MultiInstances = false, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")] // This attribute registers a tool window exposed by this package.
     [ProvideToolWindow(typeof(toolSpiraExplorerDetails), MultiInstances = true, Window = "76C22C24-36B6-4C0C-BF60-FFCB65D1B05B", Transient = false)] // This attribute registers a tool window exposed by this package.
     [Guid(GuidList.guidSpiraExplorerPkgString)]
+    [ProvideSolutionProperties(_strSolutionPersistanceKey)]
     public sealed class SpiraExplorerPackage : Package, IVsPersistSolutionOpts, IVsPersistSolutionProps
     {
         private EnvDTE.Events _EnvironEvents;
@@ -352,16 +353,19 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 
             //Add the Spira settings to the hashtable
             Hashtable hashSpiraUserData = new Hashtable();
-            hashSpiraUserData["spiraLogin"] = SpiraContext.Login;
-            hashSpiraUserData["spiraPassword"] = SpiraContext.Password;
+            if (!String.IsNullOrEmpty(SpiraContext.Login) && !String.IsNullOrEmpty(SpiraContext.Password))
+            {
+                hashSpiraUserData["spiraLogin"] = SpiraContext.Login;
+                hashSpiraUserData["spiraPassword"] = SpiraContext.Password;
 
-            // The easiest way to read/write the data of interest is by using a binary formatter class
-            // This way, we can write a map of information about projects with one call 
-            // (each element in the map needs to be serializable though)
-            // The alternative is to write binary data in any byte format you'd like using pOptionsStream.Write
-            DataStreamFromComStream pStream = new DataStreamFromComStream(pOptionsStream);
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(pStream, hashSpiraUserData);
+                // The easiest way to read/write the data of interest is by using a binary formatter class
+                // This way, we can write a map of information about projects with one call 
+                // (each element in the map needs to be serializable though)
+                // The alternative is to write binary data in any byte format you'd like using pOptionsStream.Write
+                DataStreamFromComStream pStream = new DataStreamFromComStream(pOptionsStream);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(pStream, hashSpiraUserData);
+            }
 
             return VSConstants.S_OK;
         }
@@ -387,11 +391,11 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 
                 if (hashSpiraUserData.ContainsKey("spiraLogin"))
                 {
-                    hashSpiraUserData["spiraLogin"] = SpiraContext.Login;
+                    SpiraContext.Login = (string)hashSpiraUserData["spiraLogin"];
                 }
                 if (hashSpiraUserData.ContainsKey("spiraPassword"))
                 {
-                    hashSpiraUserData["spiraPassword"] = SpiraContext.Password;
+                    SpiraContext.Password = (string)hashSpiraUserData["spiraPassword"];
                 }
             }
 
@@ -469,7 +473,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
                 return VSConstants.E_POINTER;
 
             pPropBag.Write("spiraUrl", SpiraContext.BaseUri.ToString());
-            pPropBag.Write("spiraProjectId", SpiraContext.ProjectId);
+            pPropBag.Write("spiraProjectId", SpiraContext.ProjectId.ToString());
 
             return VSConstants.S_OK;
         }
@@ -492,10 +496,14 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
             }
             if (projectId != null)
             {
-                SpiraContext.ProjectId = (int)projectId;
+                int intValue;
+                if (Int32.TryParse((string)projectId, out intValue))
+                {
+                    SpiraContext.ProjectId = intValue;
 
-                //We don't want it marked as dirty yet
-                SpiraContext.SolutionPropsSaved();
+                    //We don't want it marked as dirty yet
+                    SpiraContext.SolutionPropsSaved();
+                }
             }
 
             return VSConstants.S_OK;
