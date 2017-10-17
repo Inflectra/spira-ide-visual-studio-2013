@@ -155,49 +155,9 @@
     <Compile Include="Classes\DataStreamFromComStream.cs" />
     <Compile Include="Classes\ProvideSolutionProperties.cs" />
     <Compile Include="Classes\SpiraContext.cs" />
-    <Compile Include="Forms\cntlDiscussionFrame\wpfDiscussionFrame.xaml.cs">
-      <DependentUpon>wpfDiscussionFrame.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Forms\cntlSpiraExplorer\cntlSpiraExplorer - Populate Tree.cs" />
     <Compile Include="Forms\cntlSpiraExplorer\cntlSpiraExplorer.xaml.cs">
       <DependentUpon>cntlSpiraExplorer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\cntrlRichTextEditor\cntrlRichTextEditor.xaml.cs">
-      <DependentUpon>cntrlRichTextEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\cntrlRichTextEditor\HelperControls\cntrlAnchorDialogue.xaml.cs">
-      <DependentUpon>cntrlAnchorDialogue.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\cntrlRichTextEditor\HelperControls\cntrlColorPicker\ColorPicker.cs" />
-    <Compile Include="Forms\cntrlRichTextEditor\HelperControls\cntrlColorPicker\SupportingClasses.cs" />
-    <Compile Include="Forms\cntrlRichTextEditor\HelperControls\cntrlColorPicker\wpfColorPickerDialog.xaml.cs">
-      <DependentUpon>wpfColorPickerDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CustomPropertyControl\cntlCustomProps.xaml.cs">
-      <DependentUpon>cntlCustomProps.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmDetailsRequirement\frmDetailsRequirement - Load.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Forms\frmDetailsRequirement\frmDetailsRequirement - Save.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Forms\frmDetailsRequirement\frmDetailsRequirement.xaml.cs">
-      <DependentUpon>frmDetailsRequirement.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Forms\frmDetailsTask\frmDetailsTask - Load.cs" />
-    <Compile Include="Forms\frmDetailsTask\frmDetailsTask - Save.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Forms\frmDetailsTask\frmDetailsTask.xaml.cs">
-      <DependentUpon>frmDetailsTask.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmDetailsIncident\frmDetailsIncident - Workflow.cs" />
-    <Compile Include="Forms\frmDetailsIncident\frmDetailsIncident - Load.cs" />
-    <Compile Include="Forms\frmDetailsIncident\frmDetailsIncident - Save.cs" />
-    <Compile Include="Forms\frmDetailsIncident\frmDetailsIncident.xaml.cs">
-      <DependentUpon>frmDetailsIncident.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmNewServerProject\frmNewServerProject.xaml.cs">
       <DependentUpon>frmNewServerProject.xaml</DependentUpon>
@@ -264,90 +224,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\img_Spira_24b.bmp" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_bold.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_font.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_fontcolor.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_fonthighlight.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_fontsize.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_indent.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_italic.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_justcenter.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_justleft.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_justright.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_link.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_listbullet.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_listnumber.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_outdent.png" />
-    <Resource Include="Forms\cntrlRichTextEditor\Resources\img_underline.png" />
     <Content Include="Resources\Package.ico">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Forms\cntlDiscussionFrame\wpfDiscussionFrame.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Forms\cntlSpiraExplorer\cntlSpiraExplorer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\cntrlRichTextEditor\cntrlRichTextEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\cntrlRichTextEditor\HelperControls\cntrlAnchorDialogue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\cntrlRichTextEditor\HelperControls\cntrlColorPicker\wpfColorPickerDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\CustomPropertyControl\cntlCustomProps.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\frmDetailsRequirement\frmDetailsRequirement.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\frmDetailsTask\frmDetailsTask.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\frmDetailsIncident\frmDetailsIncident.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -428,7 +311,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_StartDate="2000/1/1" BuildVersion_DetectChanges="False" BuildVersion_IncrementBeforeBuild="True" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_IncrementBeforeBuild="True" BuildVersion_DetectChanges="False" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
