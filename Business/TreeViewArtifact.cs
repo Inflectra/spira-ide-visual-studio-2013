@@ -472,7 +472,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 					//Create the menu items..
 					// - Open in Browser/Spira
 					MenuItem mnuOpenWeb = new MenuItem();
-					mnuOpenWeb.Header = StaticFuncs.getCultureResource.GetString("app_General_ViewBrowser");
+                    mnuOpenWeb.FontWeight = FontWeights.Bold;   //Look like the default
+                    mnuOpenWeb.Header = StaticFuncs.getCultureResource.GetString("app_General_ViewBrowser");
 					mnuOpenWeb.Click += new RoutedEventHandler(mnuOpenWeb_Click);
 					// - Copy ID to Clipboard
 					MenuItem mnuCopyHead = new MenuItem();
