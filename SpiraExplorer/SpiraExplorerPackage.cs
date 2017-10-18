@@ -10,7 +10,6 @@ using System.Windows;
 using EnvDTE;
 using Inflectra.Global;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business;
-using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Controls;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Properties;
 using Microsoft.VisualStudio.Shell;
@@ -18,6 +17,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
 using Microsoft.VisualStudio;
+using static Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.TreeViewArtifact;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 {
@@ -33,7 +33,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
     [InstalledProductRegistration("#110", "#112", "3.2.1.14503", IconResourceID = 400)] // This attribute is used to register the information needed to show the this package in the Help/About dialog of Visual Studio.
     [ProvideMenuResource("Menus.ctmenu", 1)] // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideToolWindow(typeof(toolSpiraExplorer), MultiInstances = false, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")] // This attribute registers a tool window exposed by this package.
-    [ProvideToolWindow(typeof(toolSpiraExplorerDetails), MultiInstances = true, Window = "76C22C24-36B6-4C0C-BF60-FFCB65D1B05B", Transient = false)] // This attribute registers a tool window exposed by this package.
     [Guid(GuidList.guidSpiraExplorerPkgString)]
     [ProvideSolutionProperties(_strSolutionPersistanceKey)]
     public sealed class SpiraExplorerPackage : Package, IVsPersistSolutionOpts, IVsPersistSolutionProps
@@ -165,17 +164,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
                     cntlSpiraExplorer toolWindow = (cntlSpiraExplorer)window.Content;
                     toolWindow.loadSolution(null);
                 }
-
-                //Close all open details windows.
-                lock (SpiraExplorerPackage._windowDetails)
-                {
-                    foreach (KeyValuePair<TreeViewArtifact, int> detailWindow in SpiraExplorerPackage._windowDetails)
-                    {
-                        ToolWindowPane windowDetail = this.FindToolWindow(typeof(toolSpiraExplorerDetails), detailWindow.Value, false);
-                        if (windowDetail != null)
-                            ((IVsWindowFrame)windowDetail.Frame).Hide();
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -209,57 +197,44 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
         }
         #endregion
 
-        public void OpenDetailsToolWindow(TreeViewArtifact Artifact)
+        /// <summary>
+        /// Opens the artifact in a web browser
+        /// </summary>
+        /// <param name="treeViewArtifact"></param>
+        public void OpenDetailsToolWindow(TreeViewArtifact treeViewArtifact)
         {
             string METHOD = CLASS + "OpenDetailsToolWindow";
             try
             {
+                //We need to get the URL, and then launch it.
+                string strUrl = ((SpiraProject)treeViewArtifact.ArtifactParentProject.ArtifactTag).ServerURL.ToString();
+
+                Business.SpiraTeam_Client.SoapServiceClient client = StaticFuncs.CreateClient(strUrl);
+
+                if (treeViewArtifact.ArtifactType != ArtifactTypeEnum.None)
+                {
+                    string strArtUrl = client.System_GetArtifactUrl((int)treeViewArtifact.ArtifactType, treeViewArtifact.ArtifactParentProject.ArtifactId, treeViewArtifact.ArtifactId, null);
+
+                    //In case the API hasn't been updated to return the full URL..
+                    if (strArtUrl.StartsWith("~"))
+                        strUrl = strArtUrl.Replace("~", strUrl);
+
+                    try
+                    {
+                        System.Diagnostics.Process.Start(strUrl);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogMessage(ex);
+                        MessageBox.Show("Error launching browser.", "Launch URL", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Logger.LogMessage(ex, "OpenDetailsToolWindow()");
                 MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        /// <summary>Returns the details window if it exists, otherwise null.</summary>
-        /// <param name="Artifact">The TreeViewArtifact to get it's detailswindow.</param>
-        /// <returns>A toolSpiraExplorerDetails if found, null otherwise.</returns>
-        public toolSpiraExplorerDetails FindExistingToolWindow(TreeViewArtifact Artifact, bool create = false)
-        {
-            toolSpiraExplorerDetails retWindow = null;
-
-            try
-            {
-                if (SpiraExplorerPackage._windowDetails == null)
-                {
-                    SpiraExplorerPackage._windowDetails = new Dictionary<TreeViewArtifact, int>();
-                }
-
-                //Get the window ID if it already exists.
-                int NextId = -1;
-                if (SpiraExplorerPackage._windowDetails.ContainsKey(Artifact)) //Get the ID if it exists.
-                    NextId = SpiraExplorerPackage._windowDetails[Artifact];
-                else //Figure out the next ID.
-                {
-                    SpiraExplorerPackage._numWindowIds++;
-                    NextId = SpiraExplorerPackage._numWindowIds;
-                    SpiraExplorerPackage._windowDetails.Add(Artifact, SpiraExplorerPackage._numWindowIds);
-                }
-
-                //Now try to grab the window..
-                retWindow = this.FindToolWindow(typeof(toolSpiraExplorerDetails), NextId, false) as toolSpiraExplorerDetails;
-
-                if (retWindow == null && create)
-                    retWindow = this.FindToolWindow(typeof(toolSpiraExplorerDetails), NextId, true) as toolSpiraExplorerDetails;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogMessage(ex, "Error creating window.");
-                retWindow = null;
-            }
-
-            return retWindow;
         }
 
         #region IVsPersistSolutionOpts methods

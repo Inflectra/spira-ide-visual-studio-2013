@@ -470,29 +470,17 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				if (!this.ArtifactIsFolder)
 				{
 					//Create the menu items..
-					// - Open in VS.
-					MenuItem mnuDetails = new MenuItem();
-					mnuDetails.Header = StaticFuncs.getCultureResource.GetString("app_General_ViewDetails");
-					mnuDetails.FontWeight = FontWeights.Bold;
-					mnuDetails.Click += new RoutedEventHandler(mnuDetails_Click);
-					// - Open in Browser
+					// - Open in Browser/Spira
 					MenuItem mnuOpenWeb = new MenuItem();
 					mnuOpenWeb.Header = StaticFuncs.getCultureResource.GetString("app_General_ViewBrowser");
 					mnuOpenWeb.Click += new RoutedEventHandler(mnuOpenWeb_Click);
-					// - Start (or End) Work
-					MenuItem mnuStartWork = new MenuItem();
-					mnuStartWork.Header = ((this._isTimed) ? StaticFuncs.getCultureResource.GetString("app_General_StopTimer") : StaticFuncs.getCultureResource.GetString("app_General_StartTimer"));
-					mnuStartWork.Click += new RoutedEventHandler(mnuStartWork_Click);
 					// - Copy ID to Clipboard
 					MenuItem mnuCopyHead = new MenuItem();
 					mnuCopyHead.Header = StaticFuncs.getCultureResource.GetString("app_General_CopyToClipboard");
 					mnuCopyHead.Click += new RoutedEventHandler(mnuCopyHead_Click);
 
 					//Add to the context..
-					retMenu.Items.Add(mnuDetails);
 					retMenu.Items.Add(mnuOpenWeb);
-					retMenu.Items.Add(new Separator());
-					if (this.ArtifactType != ArtifactTypeEnum.Requirement) retMenu.Items.Add(mnuStartWork);
 					retMenu.Items.Add(mnuCopyHead);
 				}
 				else
@@ -582,15 +570,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				this._method(this);
 		}
 
-		/// <summary>Hit when the user wants to start or stop work.</summary>
-		/// <param name="sender">MenuItem</param>
-		/// <param name="e">RoutedEventArgs</param>
-		private void mnuStartWork_Click(object sender, RoutedEventArgs e)
-		{
-			e.Handled = true;
-			this.IsTimed = !this._isTimed;
-		}
-
 		/// <summary>Hit when the user selects to launch the URL in the browser.</summary>
 		/// <param name="sender">MenuItem</param>
 		/// <param name="e">RoutedEventArgs</param>
@@ -598,47 +577,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 		{
 			e.Handled = true;
 
-			//We need to get the URL, and then launch it.
-			string strUrl = ((SpiraProject)this.ArtifactParentProject.ArtifactTag).ServerURL.ToString();
+            this.DetailsOpenRequested(this, new EventArgs());
+        }
 
-			Business.SpiraTeam_Client.SoapServiceClient client = StaticFuncs.CreateClient(strUrl);
-
-			if (this.ArtifactType != ArtifactTypeEnum.None)
-			{
-				string strArtUrl = client.System_GetArtifactUrl((int)this.ArtifactType, this.ArtifactParentProject.ArtifactId, this.ArtifactId, null);
-
-				//In case the API hasn't been updated to return the full URL..
-				if (strArtUrl.StartsWith("~"))
-					strUrl = strArtUrl.Replace("~", strUrl);
-
-				try
-				{
-					System.Diagnostics.Process.Start(strUrl);
-				}
-				catch (Exception ex)
-				{
-					Logger.LogMessage(ex);
-					MessageBox.Show("Error launching browser.", "Launch URL", MessageBoxButton.OK, MessageBoxImage.Warning);
-				}
-			}
-		}
-
-		/// <summary>Hit when the user wants to open the details screen of an item.</summary>
-		/// <param name="sender">MenuItem</param>
-		/// <param name="e">RoutedEventArgs</param>
-		private void mnuDetails_Click(object sender, RoutedEventArgs e)
-		{
-			//This is the same as double-clicking.
-			//TODO: Fire off a details window.
-			e.Handled = true;
-
-			this.DetailsOpenRequested(this, new EventArgs());
-		}
-
-		/// <summary>Hit when the user wants to copy the artifact ID to the clipboard.</summary>
-		/// <param name="sender">menuItem</param>
-		/// <param name="e">RoutedEventArgs</param>
-		private void mnuCopyHead_Click(object sender, RoutedEventArgs e)
+        /// <summary>Hit when the user wants to copy the artifact ID to the clipboard.</summary>
+        /// <param name="sender">menuItem</param>
+        /// <param name="e">RoutedEventArgs</param>
+        private void mnuCopyHead_Click(object sender, RoutedEventArgs e)
 		{
 			e.Handled = true;
 

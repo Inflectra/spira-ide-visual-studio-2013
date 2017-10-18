@@ -3,6 +3,8 @@ using System.Windows;
 using Inflectra.Global;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System.Collections;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
@@ -18,8 +20,11 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 	//[Guid("3ae79031-e1bc-11d0-8f78-00a0c9110057")]
 	public class toolSpiraExplorer : ToolWindowPane
 	{
-		/// <summary>Standard constructor for the tool window.</summary>
-		public toolSpiraExplorer() :
+        private ITrackSelection trackSel;
+        private SelectionContainer selContainer;
+
+        /// <summary>Standard constructor for the tool window.</summary>
+        public toolSpiraExplorer() :
 			base(null)
 		{
 			try
@@ -48,7 +53,43 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				Logger.LogMessage(ex, "ShowToolWindow()");
 				MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
 			}
-
 		}
-	}
+
+        #region Support for populating Properties window
+
+        private ITrackSelection TrackSelection
+        {
+            get
+            {
+                if (trackSel == null)
+                    trackSel =
+                       GetService(typeof(STrackSelection)) as ITrackSelection;
+                return trackSel;
+            }
+        }
+
+        public void UpdateSelection()
+        {
+            ITrackSelection track = TrackSelection;
+            if (track != null)
+                track.OnSelectChange((ISelectionContainer)selContainer);
+        }
+
+        public void SelectList(ArrayList list)
+        {
+            selContainer = new SelectionContainer(true, false);
+            selContainer.SelectableObjects = list;
+            selContainer.SelectedObjects = list;
+            UpdateSelection();
+        }
+
+        public override void OnToolWindowCreated()
+        {
+            ArrayList listObjects = new ArrayList();
+            listObjects.Add(this);
+            SelectList(listObjects);
+        }
+
+        #endregion
+    }
 }

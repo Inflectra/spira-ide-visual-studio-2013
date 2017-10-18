@@ -255,34 +255,31 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				//If there is no window to update, then we need to save the item.
 				if (!((TreeViewArtifact)sender).IsTimed)
 				{
-					if (((SpiraExplorerPackage)this.Pane.Package).FindExistingToolWindow((TreeViewArtifact)sender, false) == null)
-					{
-						TreeViewArtifact artItem = sender as TreeViewArtifact;
+					TreeViewArtifact artItem = sender as TreeViewArtifact;
 
-						//No window, update it ourselves. Create the client.
-						SoapServiceClient clientWkTime = StaticFuncs.CreateClient(((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).ServerURL.ToString());
-						//Set event handlers.
-						clientWkTime.Connection_Authenticate2Completed += new EventHandler<Connection_Authenticate2CompletedEventArgs>(clientWkTime_Connection_Authenticate2Completed);
-						clientWkTime.Connection_ConnectToProjectCompleted += new EventHandler<Connection_ConnectToProjectCompletedEventArgs>(clientWkTime_Connection_ConnectToProjectCompleted);
-						clientWkTime.Incident_RetrieveByIdCompleted += new EventHandler<Incident_RetrieveByIdCompletedEventArgs>(clientWkTime_Artifact_RetrieveByIdCompleted);
-						clientWkTime.Task_RetrieveByIdCompleted += new EventHandler<Task_RetrieveByIdCompletedEventArgs>(clientWkTime_Artifact_RetrieveByIdCompleted);
-						clientWkTime.Incident_UpdateCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Artifact_UpdateCompleted);
-						clientWkTime.Task_UpdateCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Artifact_UpdateCompleted);
-						clientWkTime.Connection_DisconnectCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Connection_DisconnectCompleted);
+					//No window, update it ourselves. Create the client.
+					SoapServiceClient clientWkTime = StaticFuncs.CreateClient(((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).ServerURL.ToString());
+					//Set event handlers.
+					clientWkTime.Connection_Authenticate2Completed += new EventHandler<Connection_Authenticate2CompletedEventArgs>(clientWkTime_Connection_Authenticate2Completed);
+					clientWkTime.Connection_ConnectToProjectCompleted += new EventHandler<Connection_ConnectToProjectCompletedEventArgs>(clientWkTime_Connection_ConnectToProjectCompleted);
+					clientWkTime.Incident_RetrieveByIdCompleted += new EventHandler<Incident_RetrieveByIdCompletedEventArgs>(clientWkTime_Artifact_RetrieveByIdCompleted);
+					clientWkTime.Task_RetrieveByIdCompleted += new EventHandler<Task_RetrieveByIdCompletedEventArgs>(clientWkTime_Artifact_RetrieveByIdCompleted);
+					clientWkTime.Incident_UpdateCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Artifact_UpdateCompleted);
+					clientWkTime.Task_UpdateCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Artifact_UpdateCompleted);
+					clientWkTime.Connection_DisconnectCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Connection_DisconnectCompleted);
 
-						//Fire off the connection.
-						this.barLoading.Visibility = System.Windows.Visibility.Visible;
-						this.barLoading.IsIndeterminate = false;
-						this.barLoading.Minimum = 0;
-						this.barLoading.Maximum = 5;
-						this.barLoading.Value = 0;
-						this._numActiveClients++;
-						clientWkTime.Connection_Authenticate2Async(
-							((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).UserName,
-							((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).UserPass,
-							StaticFuncs.getCultureResource.GetString("app_ReportName"),
-							sender);
-					}
+					//Fire off the connection.
+					this.barLoading.Visibility = System.Windows.Visibility.Visible;
+					this.barLoading.IsIndeterminate = false;
+					this.barLoading.Minimum = 0;
+					this.barLoading.Maximum = 5;
+					this.barLoading.Value = 0;
+					this._numActiveClients++;
+					clientWkTime.Connection_Authenticate2Async(
+						((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).UserName,
+						((SpiraProject)artItem.ArtifactParentProject.ArtifactTag).UserPass,
+						StaticFuncs.getCultureResource.GetString("app_ReportName"),
+						sender);
 				}
 			}
 			catch (Exception ex)
