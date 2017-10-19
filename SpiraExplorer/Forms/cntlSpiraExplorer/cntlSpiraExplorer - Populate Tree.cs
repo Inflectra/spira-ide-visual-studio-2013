@@ -754,7 +754,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                             newNode.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.User;
                             //newNode.TreeNode = this;
                             newNode.ArtifactTag = remoteUser;
-                            newNode.ArtifactName = remoteUser.FullName;
+                            newNode.ArtifactName = remoteUser.FirstName + " " + remoteUser.LastName;
                             newNode.ArtifactIsFolder = false;
                             newNode.ArtifactId = remoteUser.UserId.Value;
                             newNode.Parent = parentNode;

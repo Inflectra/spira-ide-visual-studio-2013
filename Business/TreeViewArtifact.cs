@@ -397,7 +397,17 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							tipReturn = txtMessage;
 							break;
 
-						case ArtifactTypeEnum.None:
+                        case ArtifactTypeEnum.User:
+                            if (this.ArtifactTag == null)
+                            {
+                                txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderMyContacts");
+                            }
+                            else
+                                txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderGettingData");
+                            tipReturn = txtMessage;
+                            break;
+
+                        case ArtifactTypeEnum.None:
 							if (this.ArtifactName == StaticFuncs.getCultureResource.GetString("app_Tree_Incidents"))
 								txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderIncidents");
 							else if (this.ArtifactName == StaticFuncs.getCultureResource.GetString("app_Tree_Requirements"))
@@ -535,8 +545,10 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							return "[RQ:" + this.ArtifactId.ToString() + "]";
 						case ArtifactTypeEnum.Task:
 							return "[TK:" + this.ArtifactId.ToString() + "]";
-					}
-				}
+                        case ArtifactTypeEnum.User:
+                            return "[US:" + this.ArtifactId.ToString() + "]";
+                    }
+                }
 				return null;
 			}
 		}
