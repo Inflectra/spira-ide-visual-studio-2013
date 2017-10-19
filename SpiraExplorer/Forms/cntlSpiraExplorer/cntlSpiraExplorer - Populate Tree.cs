@@ -106,7 +106,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 						clientRefresh.Client.Incident_RetrieveCompleted += new EventHandler<Business.SpiraTeam_Client.Incident_RetrieveCompletedEventArgs>(_client_Incident_RetrieveCompleted);
 						clientRefresh.Client.Requirement_RetrieveCompleted += new EventHandler<Requirement_RetrieveCompletedEventArgs>(_client_Requirement_RetrieveCompleted);
 						clientRefresh.Client.Task_RetrieveCompleted += new EventHandler<Task_RetrieveCompletedEventArgs>(_client_Task_RetrieveCompleted);
-						clientRefresh.Client.Connection_DisconnectCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(_client_Connection_DisconnectCompleted);
+                        clientRefresh.Client.User_RetrieveContactsCompleted += new EventHandler<User_RetrieveContactsCompletedEventArgs>(_client_User_RetrieveContactsCompleted);
+                        clientRefresh.Client.Connection_DisconnectCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(_client_Connection_DisconnectCompleted);
 						clientRefresh.ClientNode = itemToRefresh;
 						itemToRefresh.ArtifactTag = clientRefresh;
 
@@ -143,8 +144,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 				foreach (TreeViewArtifact trvProj in this._Projects)
 				{
-					//Create the 'My' nodes.
-					TreeViewArtifact folderIncMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                    //Create the 'My' nodes.
+                    TreeViewArtifact folderUserMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                    folderUserMy.ArtifactIsFolder = true;
+                    folderUserMy.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_My"), StaticFuncs.getCultureResource.GetString("app_Tree_Contacts"));
+                    folderUserMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.User;
+                    folderUserMy.ArtifactIsFolderMine = true;
+                    TreeViewArtifact folderIncMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
 					folderIncMy.ArtifactIsFolder = true;
 					folderIncMy.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_My"), StaticFuncs.getCultureResource.GetString("app_Tree_Incidents"));
 					folderIncMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Incident;
@@ -160,10 +166,12 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					folderTskMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Task;
 					folderTskMy.ArtifactIsFolderMine = true;
 
+                    folderUserMy.Parent = trvProj;
 					folderIncMy.Parent = trvProj;
 					folderReqMy.Parent = trvProj;
 					folderTskMy.Parent = trvProj;
 
+                    trvProj.Items.Add(folderUserMy);
 					trvProj.Items.Add(folderIncMy);
 					trvProj.Items.Add(folderReqMy);
 					trvProj.Items.Add(folderTskMy);
@@ -267,9 +275,10 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					clientWkTime.Incident_UpdateCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Artifact_UpdateCompleted);
 					clientWkTime.Task_UpdateCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Artifact_UpdateCompleted);
 					clientWkTime.Connection_DisconnectCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(clientWkTime_Connection_DisconnectCompleted);
+                    clientWkTime.User_RetrieveByIdCompleted += new EventHandler<User_RetrieveByIdCompletedEventArgs>(clientWkTime_Artifact_RetrieveByIdCompleted);
 
-					//Fire off the connection.
-					this.barLoading.Visibility = System.Windows.Visibility.Visible;
+                    //Fire off the connection.
+                    this.barLoading.Visibility = System.Windows.Visibility.Visible;
 					this.barLoading.IsIndeterminate = false;
 					this.barLoading.Minimum = 0;
 					this.barLoading.Maximum = 5;
@@ -460,7 +469,11 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							wktimeClient.Task_RetrieveByIdAsync(treeArt.ArtifactId, e.UserState);
 							break;
 
-						default:
+                        case TreeViewArtifact.ArtifactTypeEnum.User:
+                            wktimeClient.User_RetrieveByIdAsync(treeArt.ArtifactId, e.UserState);
+                            break;
+
+                        default:
 							//Error, cancel operation.
 							wktimeClient.Connection_DisconnectAsync(e.UserState);
 							break;
@@ -673,7 +686,24 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 								this.refreshTree();
 							}
 							break;
-					}
+
+                        case TreeViewArtifact.ArtifactTypeEnum.User:
+                            string strContacts = Business.StaticFuncs.getCultureResource.GetString("app_Tree_Contacts");
+                            string strMyContacts = string.Format(Business.StaticFuncs.getCultureResource.GetString("app_Tree_My"), strContacts);
+                            if (client.ClientNode.ArtifactName.ToLowerInvariant().Trim() == strMyContacts.ToLowerInvariant().Trim())
+                            {
+                                //Send this client off to get all the user's contacts
+                                client.Client.User_RetrieveContactsAsync(client.ClientNode);
+                            }
+                            else
+                            {
+                                // Do nothing. Something wrong.
+                                Logger.LogMessage(METHOD, "Folder has invalid name.", System.Diagnostics.EventLogEntryType.Error);
+                                this._numActiveClients--;
+                                this.refreshTree();
+                            }
+                            break;
+                    }
 				}
 				else
 				{
@@ -697,10 +727,74 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			}
 		}
 
-		/// <summary>Hit when a client sent to retrieve Requirements is finished with results.</summary>
-		/// <param name="sender">SoapServiceClient</param>
-		/// <param name="e">Requirement_RetrieveCompletedEventArgs</param>
-		private void _client_Requirement_RetrieveCompleted(object sender, Requirement_RetrieveCompletedEventArgs e)
+        /// <summary>
+        /// Hit when a client sent to retreiev user contacts is finished with the results
+        /// </summary>
+        /// <param name="sender">SoapServiceClient</param>
+        /// <param name="e">User_RetrieveContactsCompletedEventArgs</param>
+        private void _client_User_RetrieveContactsCompleted(object sender, User_RetrieveContactsCompletedEventArgs e)
+        {
+            string METHOD = CLASS + "_client_User_RetrieveContactsCompleted";
+            try
+            {
+                //Grab parent node.
+                TreeViewArtifact parentNode = e.UserState as TreeViewArtifact;
+
+                if (parentNode != null)
+                {
+                    parentNode.Items.Clear();
+
+                    //We got results back. Let's do something with them!
+                    if (e.Error == null)
+                    {
+                        foreach (RemoteUser remoteUser in e.Result)
+                        {
+                            //Make new node.
+                            TreeViewArtifact newNode = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                            newNode.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.User;
+                            //newNode.TreeNode = this;
+                            newNode.ArtifactTag = remoteUser;
+                            newNode.ArtifactName = remoteUser.FullName;
+                            newNode.ArtifactIsFolder = false;
+                            newNode.ArtifactId = remoteUser.UserId.Value;
+                            newNode.Parent = parentNode;
+                            newNode.DetailsOpenRequested += new EventHandler(newNode_DetailsOpenRequested);
+
+                            parentNode.Items.Add(newNode);
+                        }
+                    }
+                    else
+                    {
+                        this.addErrorNode(ref parentNode, e.Error, StaticFuncs.getCultureResource.GetString("app_Error_RetrieveShort"));
+                    }
+                }
+                else
+                {
+                    //No parent node. Log error, exit.
+                    Logger.LogMessage(METHOD, "No parent folder.", System.Diagnostics.EventLogEntryType.Error);
+                }
+
+                //Disconnect the client, subtract from the count.
+                try
+                {
+                    ((SoapServiceClient)sender).Connection_DisconnectAsync();
+                }
+                catch { }
+                parentNode.ArtifactTag = null;
+                this._numActiveClients--;
+                this.refreshTree();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(ex, "_client_User_RetrieveContactsCompleted()");
+                MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>Hit when a client sent to retrieve Requirements is finished with results.</summary>
+        /// <param name="sender">SoapServiceClient</param>
+        /// <param name="e">Requirement_RetrieveCompletedEventArgs</param>
+        private void _client_Requirement_RetrieveCompleted(object sender, Requirement_RetrieveCompletedEventArgs e)
 		{
 			string METHOD = CLASS + "_client_Requirement_RetrieveCompleted";
 			try

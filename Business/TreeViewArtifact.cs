@@ -203,7 +203,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							return StaticFuncs.getImage("imgFolderRequirement", new System.Windows.Size(16, 16)).Source;
 						case ArtifactTypeEnum.Task:
 							return StaticFuncs.getImage("imgFolderTask", new System.Windows.Size(16, 16)).Source;
-						default:
+                        case ArtifactTypeEnum.User:
+                            return StaticFuncs.getImage("imgFolderUser", new System.Windows.Size(16, 16)).Source;
+                        default:
 							return StaticFuncs.getImage("imgFolder", new System.Windows.Size(16, 16)).Source;
 					}
 				else
@@ -215,7 +217,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							return StaticFuncs.getImage("imgRequirement", new System.Windows.Size(16, 16)).Source;
 						case ArtifactTypeEnum.Task:
 							return StaticFuncs.getImage("imgTask", new System.Windows.Size(16, 16)).Source;
-						default:
+                        case ArtifactTypeEnum.User:
+                            return StaticFuncs.getImage("imgUser", new System.Windows.Size(16, 16)).Source;
+                        default:
 							return null;
 					}
 			}
@@ -285,7 +289,12 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 						if (item.StatusId != 1 && item.StatusId != 2 && item.StatusId != 3 && item.StatusId != 5 && item.StatusId != 7)
 							retValue = true;
 					}
-				}
+                    else if (this.ArtifactTag.GetType() == typeof(SpiraTeam_Client.RemoteUser))
+                    {
+                        SpiraTeam_Client.RemoteUser item = (SpiraTeam_Client.RemoteUser)this.ArtifactTag;
+                        retValue = false;
+                    }
+                }
 
 				return retValue;
 			}
@@ -330,7 +339,11 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 						case ArtifactTypeEnum.Task:
 							tipReturn = new cntlTTipTask(this);
 							break;
-					}
+
+                        case ArtifactTypeEnum.User:
+                            tipReturn = new cntlTTipUser(this);
+                            break;
+                    }
 				}
 				#endregion
 				else
@@ -691,7 +704,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 			Task = 6,
 			Incident = 3,
 			Requirement = 1,
-			Project = -4
-		}
-	}
+			Project = -4,
+            User = -3
+        }
+    }
 }

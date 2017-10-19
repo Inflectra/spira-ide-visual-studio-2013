@@ -166,6 +166,8 @@
     <Resource Include="Resources\imgRelease.png" />
     <Resource Include="Resources\imgTaskTime.png" />
     <Resource Include="Resources\img_Save.png" />
+    <Resource Include="Resources\imgUser.png" />
+    <Resource Include="Resources\imgFolderUser.png" />
     <Content Include="Resources\Spira.ico" />
     <None Include="Resources\Spira_NoComp.ico" />
     <None Include="Resources\Spira_XP.ico" />
@@ -194,7 +196,7 @@
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_DetectChanges="False" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_DetectChanges="False" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_UseGlobalSettings="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

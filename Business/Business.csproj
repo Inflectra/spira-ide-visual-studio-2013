@@ -102,6 +102,9 @@
     <Compile Include="Controls\cntlToolTipWindows\cntlTTipIncident.xaml.cs">
       <DependentUpon>cntlTTipIncident.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\cntlToolTipWindows\cntlTTipUser.xaml.cs">
+      <DependentUpon>cntlTTipUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\cntlToolTipWindows\cntlTTipRequirement.xaml.cs">
       <DependentUpon>cntlTTipRequirement.xaml</DependentUpon>
     </Compile>
@@ -441,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\cntlToolTipWindows\cntlTTipUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\cntlToolTipWindows\cntlTTipRequirement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -479,7 +486,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Release" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_UseGlobalSettings="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.None.DeltaBaseDate" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Release" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
