@@ -181,8 +181,156 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 			return errMsg;
 		}
 
-		/// <summary>Remove HTML tags from a string.</summary>
-		public static string StripTagsCharArray(string source)
+        /// <summary>
+        /// Renders HTML content as plain text, since JIRA cannot handle tags
+        /// </summary>
+        /// <param name="source">The HTML markup</param>
+        /// <returns>Plain text representation</returns>
+        /// <remarks>Handles line-breaks, etc.</remarks>
+        public static string HtmlRenderAsPlainText(this string source)
+        {
+            try
+            {
+                string result;
+
+                // Remove HTML Development formatting
+                // Replace line breaks with space
+                // because browsers inserts space
+                result = source.Replace("\r", " ");
+                // Replace line breaks with space
+                // because browsers inserts space
+                result = result.Replace("\n", " ");
+                // Remove step-formatting
+                result = result.Replace("\t", string.Empty);
+                // Remove repeating speces becuase browsers ignore them
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"( )+", " ");
+
+                // Remove the header (prepare first by clearing attributes)
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*head([^>])*>", "<head>",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"(<( )*(/)( )*head( )*>)", "</head>",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(<head>).*(</head>)", string.Empty,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                // remove all scripts (prepare first by clearing attributes)
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*script([^>])*>", "<script>",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"(<( )*(/)( )*script( )*>)", "</script>",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                //result = System.Text.RegularExpressions.Regex.Replace(result, 
+                //         @"(<script>)([^(<script>\.</script>)])*(</script>)",
+                //         string.Empty, 
+                //         System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"(<script>).*(</script>)", string.Empty,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                // remove all styles (prepare first by clearing attributes)
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*style([^>])*>", "<style>",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"(<( )*(/)( )*style( )*>)", "</style>",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(<style>).*(</style>)", string.Empty,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                // insert tabs in spaces of <td> tags
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*td([^>])*>", "\t",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                // insert line breaks in places of <BR> and <LI> tags
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*br( )*>", "\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*br( )*/>", "\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*li( )*>", "\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                // insert line paragraphs (double line breaks) in place
+                // if <P>, <DIV> and <TR> tags
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*div([^>])*>", "\r\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*tr([^>])*>", "\r\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<( )*p([^>])*>", "\r\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                // Remove remaining tags like <a>, links, images,
+                // comments etc - anything thats enclosed inside < >
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    @"<[^>]*>", string.Empty,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+                //HTML Decode to convert &xxxx; entities back to text
+                result = System.Web.HttpUtility.HtmlDecode(result);
+
+                // make line breaking consistent
+                result = result.Replace("\n", "\r");
+
+                // Remove extra line breaks and tabs:
+                // replace over 2 breaks with 2 and over 4 tabs with 4. 
+                // Prepare first to remove any whitespaces inbetween
+                // the escaped characters and remove redundant tabs inbetween linebreaks
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(\r)( )+(\r)", "\r\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(\t)( )+(\t)", "\t\t",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(\t)( )+(\r)", "\t\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(\r)( )+(\t)", "\r\t",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                // Remove redundant tabs
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(\r)(\t)+(\r)", "\r\r",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                // Remove multible tabs followind a linebreak with just one tab
+                result = System.Text.RegularExpressions.Regex.Replace(result,
+                    "(\r)(\t)+", "\r\t",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                // Initial replacement target string for linebreaks
+                string breaks = "\r\r\r";
+                // Initial replacement target string for tabs
+                string tabs = "\t\t\t\t\t";
+                for (int index = 0; index < result.Length; index++)
+                {
+                    result = result.Replace(breaks, "\r\r");
+                    result = result.Replace(tabs, "\t\t\t\t");
+                    breaks = breaks + "\r";
+                    tabs = tabs + "\t";
+                }
+
+                //Convert newlines into a form that JIRA likes
+                return result.Replace("\r", "\r\n");
+            }
+            catch
+            {
+                return source;
+            }
+        }
+
+
+        /// <summary>Remove HTML tags from a string.</summary>
+        public static string StripTagsCharArray(string source)
 		{
 			if (source == null) source = "";
 			char[] array = new char[source.Length];

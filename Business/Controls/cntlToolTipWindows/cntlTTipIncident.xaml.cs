@@ -74,7 +74,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.Forms
 			this.dataDetVer.Text = ((dynamic)this.DataItem.ArtifactTag).DetectedReleaseVersionNumber + " " + this.getVersionIdNumber(((dynamic)this.DataItem.ArtifactTag).DetectedReleaseId);
 			this.dataResVer.Text = ((dynamic)this.DataItem.ArtifactTag).ResolvedReleaseVersionNumber + " " + this.getVersionIdNumber(((dynamic)this.DataItem.ArtifactTag).ResolvedReleaseId);
 			this.dataVerVer.Text = ((dynamic)this.DataItem.ArtifactTag).VerifiedReleaseVersionNumber + " " + this.getVersionIdNumber(((dynamic)this.DataItem.ArtifactTag).VerifiedReleaseId);
-		}
+            this.dataDescription.Text = ((SpiraTeam_Client.RemoteIncident)this.DataItem.ArtifactTag).Description.HtmlRenderAsPlainText();
+        }
 
 		/// <summary>Takes a nullable integer, and returs a useful time-string.</summary>
 		/// <param name="Minutes">The number of minutes.</param>

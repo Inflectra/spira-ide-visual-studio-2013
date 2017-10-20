@@ -76,10 +76,11 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.Forms
 					this.dataPrjEffort.Text = this.getTime(((dynamic)this.DataItem.ArtifactTag).ProjectedEffort);
 					this.dataActEffort.Text = this.getTime(((dynamic)this.DataItem.ArtifactTag).ActualEffort);
 					this.dataRemEffort.Text = this.getTime(((dynamic)this.DataItem.ArtifactTag).RemainingEffort);
+                    this.dataDescription.Text = ((SpiraTeam_Client.RemoteTask)this.DataItem.ArtifactTag).Description.HtmlRenderAsPlainText();
 
-					//Set any flag colors.
-					//- Start Date
-					if (this.isDateTimePast(((dynamic)this.DataItem.ArtifactTag).StartDate))
+                    //Set any flag colors.
+                    //- Start Date
+                    if (this.isDateTimePast(((dynamic)this.DataItem.ArtifactTag).StartDate))
 					{
 						if ((int)(((dynamic)this.DataItem.ArtifactTag).TaskStatusId) == 1)
 						{

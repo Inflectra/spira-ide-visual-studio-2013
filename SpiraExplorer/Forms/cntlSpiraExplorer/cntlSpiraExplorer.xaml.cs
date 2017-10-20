@@ -203,7 +203,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							if (!trvArtifact.ArtifactIsFolder &&
 								(trvArtifact.ArtifactType == TreeViewArtifact.ArtifactTypeEnum.Incident ||
 								trvArtifact.ArtifactType == TreeViewArtifact.ArtifactTypeEnum.Requirement ||
-								trvArtifact.ArtifactType == TreeViewArtifact.ArtifactTypeEnum.Task))
+                                trvArtifact.ArtifactType == TreeViewArtifact.ArtifactTypeEnum.User ||
+                                trvArtifact.ArtifactType == TreeViewArtifact.ArtifactTypeEnum.Task))
 							{
 								//Okay then, let's open up the details.
 								((SpiraExplorerPackage)this.Pane.Package).OpenDetailsToolWindow(trvArtifact);

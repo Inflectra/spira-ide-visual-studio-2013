@@ -213,7 +213,17 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 
                 if (treeViewArtifact.ArtifactType != ArtifactTypeEnum.None)
                 {
-                    string strArtUrl = client.System_GetArtifactUrl((int)treeViewArtifact.ArtifactType, treeViewArtifact.ArtifactParentProject.ArtifactId, treeViewArtifact.ArtifactId, null);
+                    //Users need to use the resource URL
+                    string strArtUrl;
+                    if (treeViewArtifact.ArtifactType == ArtifactTypeEnum.User)
+                    {
+                        //Resources = -11,
+                        strArtUrl = client.System_GetArtifactUrl(/*Resources*/-11, treeViewArtifact.ArtifactParentProject.ArtifactId, treeViewArtifact.ArtifactId, null);
+                    }
+                    else
+                    {
+                        strArtUrl = client.System_GetArtifactUrl((int)treeViewArtifact.ArtifactType, treeViewArtifact.ArtifactParentProject.ArtifactId, treeViewArtifact.ArtifactId, null);
+                    }
 
                     //In case the API hasn't been updated to return the full URL..
                     if (strArtUrl.StartsWith("~"))
