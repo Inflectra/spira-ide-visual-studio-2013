@@ -109,7 +109,16 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					//Only if it's NOT not a folder.
 					TreeViewArtifact selItem = this.trvProject.SelectedItem as TreeViewArtifact;
 					this.btnRefresh.IsEnabled = (selItem != null && selItem.ArtifactIsFolder);
-				}
+
+                    //Also refresh the properties window
+                    if (Pane != null && Pane is toolSpiraExplorer)
+                    {
+                        //https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.shell.interop.ivsuishell.refreshpropertybrowser(v=vs.120).aspx
+                        IVsUIShell shell = ((toolSpiraExplorer)Pane).GetVSService(typeof(SVsUIShell)) as IVsUIShell;
+                        if (shell != null)
+                            shell.RefreshPropertyBrowser(-1);
+                    }
+                }
 				else
 					this.btnRefresh.IsEnabled = false;
 			}

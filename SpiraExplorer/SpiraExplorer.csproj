@@ -155,6 +155,7 @@
     <Compile Include="Classes\DataStreamFromComStream.cs" />
     <Compile Include="Classes\ProvideSolutionProperties.cs" />
     <Compile Include="Classes\SpiraContext.cs" />
+    <Compile Include="Classes\SpiraProperties.cs" />
     <Compile Include="Forms\cntlSpiraExplorer\cntlSpiraExplorer - Populate Tree.cs" />
     <Compile Include="Forms\cntlSpiraExplorer\cntlSpiraExplorer.xaml.cs">
       <DependentUpon>cntlSpiraExplorer.xaml</DependentUpon>

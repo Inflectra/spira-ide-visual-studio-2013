@@ -19,6 +19,36 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		private List<TreeViewArtifact> _Projects = new List<TreeViewArtifact>();
 		private int _numActiveClients = 0;
 
+        /// <summary>
+        /// Returns the current project name
+        /// </summary>
+        public string CurrentProject
+        {
+            get
+            {
+                if (this._Projects != null && this._Projects.Count > 0)
+                {
+                    return this._Projects[0].ArtifactName;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns the currently selected artifact
+        /// </summary>
+        public TreeViewArtifact CurrentArtifact
+        {
+            get
+            {
+                if (this.trvProject.SelectedItem != null && this.trvProject.SelectedItem is TreeViewArtifact)
+                {
+                    return (TreeViewArtifact)this.trvProject.SelectedItem;
+                }
+                return null;
+            }
+        }
+
         /// <summary>Loads a Spira project into the treeview.</summary>
         /// <param name="projectId">The id of the project</param>
         private void loadProject(int projectId)

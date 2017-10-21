@@ -5,6 +5,8 @@ using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Collections;
+using System.ComponentModel;
+using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
@@ -57,6 +59,33 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
         #region Support for populating Properties window
 
+        [DisplayName("Project ID")]
+        [Category("Project Properties")]
+        [Description("SpiraTeam Project ID")]
+        public string ProjectId
+        {
+            get
+            {
+                return "PR:" + SpiraContext.ProjectId;
+            }
+        }
+
+        [DisplayName("Project Name")]
+        [Category("Project Properties")]
+        [Description("SpiraTeam Project Name")]
+        public string ProjectName
+        {
+            get
+            {
+                cntlSpiraExplorer explorerWindow = (cntlSpiraExplorer)base.Content;
+                if (explorerWindow != null)
+                {
+                    return explorerWindow.CurrentProject;
+                }
+                return null;
+            }
+        }
+
         private ITrackSelection TrackSelection
         {
             get
@@ -67,6 +96,17 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                 return trackSel;
             }
         }
+
+        /// <summary>
+        /// Allows the XAML control get to get a Visual Studio base shell service
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        public object GetVSService(Type serviceType)
+        {
+            return base.GetService(serviceType);
+        }
+
 
         public void UpdateSelection()
         {
@@ -85,9 +125,14 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
         public override void OnToolWindowCreated()
         {
-            ArrayList listObjects = new ArrayList();
-            listObjects.Add(this);
-            SelectList(listObjects);
+            cntlSpiraExplorer explorerWindow = (cntlSpiraExplorer)base.Content;
+            if (explorerWindow != null)
+            {
+                SpiraProperties spiraProperties = new SpiraProperties(explorerWindow);
+                ArrayList listObjects = new ArrayList();
+                listObjects.Add(spiraProperties);
+                SelectList(listObjects);
+            }
         }
 
         #endregion
