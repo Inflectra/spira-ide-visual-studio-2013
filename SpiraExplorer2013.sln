@@ -60,13 +60,17 @@ Global
 		{72E591D6-8F83-4D8C-8F67-9C325E623234} = {6C6F4308-7A1A-4D8E-8FD2-9355E89BAE87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_DetectChanges = False
-		BuildVersion_ConfigurationName = Release
-		BuildVersion_StartDate = 2000/1/1
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_BuildVersioningStyle = None.None.None.DeltaBaseDate
-		BuildVersion_UseGlobalSettings = False
 		BuildVersion_AssemblyInfoFilename = SharedAssemblyInfo.cs
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_BuildVersioningStyle = None.None.None.DeltaBaseDate
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_StartDate = 2000/1/1
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_DetectChanges = False
+	EndGlobalSection
+	GlobalSection(SpiraExplorerSolutionProperties) = preSolution
+		spiraUrl = http://tardis/spira
+		spiraProjectId = 1
 	EndGlobalSection
 EndGlobal
