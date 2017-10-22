@@ -219,7 +219,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							{
 								MultiValueFilter multiValue = new MultiValueFilter();
 								multiValue.Values = new List<int> { 1, 2, 3, 5, 7 };
-								statusFilter = new RemoteFilter() { PropertyName = "ScopeLevelId", MultiValue = multiValue };
+								statusFilter = new RemoteFilter() { PropertyName = "RequirementStatusId", MultiValue = multiValue };
 							}
 							break;
 					}
