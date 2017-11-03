@@ -17,7 +17,6 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
 using Microsoft.VisualStudio;
-using static Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.TreeViewArtifact;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 {
@@ -211,11 +210,11 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012
 
                 Business.SpiraTeam_Client.SoapServiceClient client = StaticFuncs.CreateClient(strUrl);
 
-                if (treeViewArtifact.ArtifactType != ArtifactTypeEnum.None)
+                if (treeViewArtifact.ArtifactType != Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.TreeViewArtifact.ArtifactTypeEnum.None)
                 {
                     //Users need to use the resource URL
                     string strArtUrl;
-                    if (treeViewArtifact.ArtifactType == ArtifactTypeEnum.User)
+                    if (treeViewArtifact.ArtifactType == Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.TreeViewArtifact.ArtifactTypeEnum.User)
                     {
                         //Resources = -11,
                         strArtUrl = client.System_GetArtifactUrl(/*Resources*/-11, treeViewArtifact.ArtifactParentProject.ArtifactId, treeViewArtifact.ArtifactId, null);
