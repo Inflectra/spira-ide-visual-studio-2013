@@ -341,7 +341,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							break;
 
                         case ArtifactTypeEnum.User:
-                            tipReturn = new cntlTTipUser(this);
+                            //tipReturn = new cntlTTipUser(this);
                             break;
                     }
 				}
