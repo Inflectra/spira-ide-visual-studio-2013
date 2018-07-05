@@ -41,7 +41,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
 				//Set button images and events.
 				// - Config button
-				Image btnConfigImage = Business.StaticFuncs.getImage("imgProject", new Size(16, 16));
+				Image btnConfigImage = Business.StaticFuncs.getImage("imgSettings", new Size(16, 16));
 				btnConfigImage.Stretch = Stretch.None;
 				this.btnConfig.Content = btnConfigImage;
 				// - Refresh Button

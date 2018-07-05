@@ -268,16 +268,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
             if (SpiraContext.HasSolutionProps)
             {
                 spiraExplorer.loadProject(SpiraContext.ProjectId);
-                spiraExplorer.refresh(null);
             }
             
         }
-
-        private void old(AsyncCompletedEventArgs e)
-        {
-            
-        }
-
 
 
         #region IVsSolutionEvents Members

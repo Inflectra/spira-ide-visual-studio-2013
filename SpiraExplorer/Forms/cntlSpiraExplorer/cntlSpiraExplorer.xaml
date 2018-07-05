@@ -19,7 +19,9 @@
         <TreeView Name="trvProject" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="150" SelectedItemChanged="trvProject_SelectedItemChanged" BorderBrush="Transparent" BorderThickness="0" Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolboxBackgroundKey}}" Foreground="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type local:TreeViewArtifact}" ItemsSource="{Binding Path=Items}" >
-                    <ContentControl Content="{Binding Path=ArtifactHeaderDisplay,Mode=OneWay}" MouseDoubleClick="TreeNode_MouseDoubleClick" />
+                    <Border Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolboxBackgroundKey}}">
+                        <ContentControl Content="{Binding Path=ArtifactHeaderDisplay,Mode=OneWay}" MouseDoubleClick="TreeNode_MouseDoubleClick" />
+                    </Border>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
             <TreeView.ItemContainerStyle>

@@ -170,6 +170,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
         public void refresh(TreeViewArtifact a)
         {
             this.refreshTreeNodeServerData(this._Projects[0]);
+            //fix width of 0 after refresh
+            this.UpdateLayout();
         }
 
 		/// <summary>Refreshes the display for all loaded projects.</summary>
