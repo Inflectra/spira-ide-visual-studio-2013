@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
+using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.newTask;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
@@ -24,6 +25,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		string _solutionName;
 		private TreeViewArtifact _nodeNoSolution;
 		private TreeViewArtifact _nodeNoProjects;
+        /// <summary>The current instance of this object. Used for refreshing</summary>
+        private static cntlSpiraExplorer instance;
+
 		#endregion
 		#region Public Events
 		public event EventHandler<OpenItemEventArgs> OpenDetails;
@@ -39,15 +43,22 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				//Overall initialization.
 				InitializeComponent();
 
-				//Set button images and events.
-				// - Config button
-				Image btnConfigImage = Business.StaticFuncs.getImage("imgSettings", new Size(16, 16));
+                instance = this;
+
+                //Set button images and events.
+                // - Config button
+                Image btnConfigImage = Business.StaticFuncs.getImage("imgSettings", new Size(16, 16));
 				btnConfigImage.Stretch = Stretch.None;
 				this.btnConfig.Content = btnConfigImage;
+
 				// - Refresh Button
 				Image btnRefreshImage = Business.StaticFuncs.getImage("imgRefresh", new Size(16, 16));
 				btnRefreshImage.Stretch = Stretch.None;
 				this.btnRefresh.Content = btnRefreshImage;
+
+                Image btnNewTaskImage = Business.StaticFuncs.getImage("imgNewTask", new Size(16, 16));
+                btnNewTaskImage.Stretch = Stretch.None;
+                this.btnNewTask.Content = btnNewTaskImage;
 				// - Set bar color.
 				this.barLoading.Foreground = (Brush)new System.Windows.Media.BrushConverter().ConvertFrom(StaticFuncs.getCultureResource.GetString("app_Colors_StyledBarColor"));
 
@@ -103,6 +114,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			try
             {
                 this.btnRefresh.IsEnabled = true;
+                this.btnNewTask.IsEnabled = true;
                 e.Handled = true;
 				//If it's a TreeViewArtifact item.
 				if (this.trvProject.SelectedItem != null && this.trvProject.SelectedItem.GetType() == typeof(TreeViewArtifact))
@@ -127,6 +139,12 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			}
 		}
 
+        /// <summary>Used to refresh without the instance</summary>
+        public static void refresh()
+        {
+            instance.refresh(null);
+        }
+
 		/// <summary>Hit when the user wants to refresh the list.</summary>
 		/// <param name="sender">btnRefresh, btnShowClosed</param>
 		/// <param name="e">Event Args</param>
@@ -143,11 +161,28 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
+        
+        /// <summary>Hit when the user wants to create a new task.</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNewTask_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new NewTaskWindow().ShowDialog();
 
-		/// <summary>Hit when a toolbar button IsEnabled is changed, for greying out icons.</summary>
-		/// <param name="sender">toolButton</param>
-		/// <param name="e">DependencyPropertyChangedEventArgs</param>
-		private void toolButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(ex, "btnNewTask_Click()");
+                MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>Hit when a toolbar button IsEnabled is changed, for greying out icons.</summary>
+        /// <param name="sender">toolButton</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
+        private void toolButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			try
 			{
@@ -316,5 +351,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			get;
 			set;
 		}
-	}
+
+        
+    }
 }

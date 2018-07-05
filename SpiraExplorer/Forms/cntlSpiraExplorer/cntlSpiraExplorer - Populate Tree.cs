@@ -973,6 +973,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			try
 			{
                 this.btnRefresh.IsEnabled = true;
+                this.btnNewTask.IsEnabled = true;
                 //start a timer if we haven't already
                 if(this.refreshTimer == null)
                 {
@@ -1008,6 +1009,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this.trvProject.Cursor = System.Windows.Input.Cursors.Arrow;
 				this.trvProject.Items.Refresh();
 				this.btnRefresh.IsEnabled = false;
+                this.btnNewTask.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
@@ -1027,6 +1029,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this.trvProject.Cursor = System.Windows.Input.Cursors.Arrow;
 				this.trvProject.Items.Refresh();
 				this.btnRefresh.IsEnabled = false;
+                this.btnNewTask.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
