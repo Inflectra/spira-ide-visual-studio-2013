@@ -166,11 +166,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 				//Add it to a textblock.
 				TextBlock txtName = new TextBlock();
 				txtName.SetResourceReference(TextBlock.ForegroundProperty, VsBrushes.ToolWindowTextKey);
-				if (this.Style_IsInError)
+
+                //remove weird italics
+				/*if (this.Style_IsInError)
 				{
 					txtName.Foreground = new SolidColorBrush(Color.FromArgb(255, 224, 64, 0));
 					txtName.FontStyle = FontStyles.Italic;
-				}
+				}*/
 				if (this.Style_IsCompleted)
 				{
 					txtName.Foreground = new SolidColorBrush(Colors.Gray);
@@ -341,7 +343,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 							break;
 
                         case ArtifactTypeEnum.User:
-                            //tipReturn = new cntlTTipUser(this);
+                            tipReturn = new cntlTTipUser(this);
                             break;
                     }
 				}
@@ -363,7 +365,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 									txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderMyIncidents");
 								else
 									txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderUnIncidents");
-								txtMessage.Text += Environment.NewLine + StaticFuncs.getCultureResource.GetString("app_Tree_FolderHiIncidents");
 							}
 							else
 								txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderGettingData");
@@ -390,7 +391,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 									txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderMyTasks");
 								else
 									txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderUnTasks");
-								txtMessage.Text += Environment.NewLine + StaticFuncs.getCultureResource.GetString("app_Tree_FolderHiTasks");
 							}
 							else
 								txtMessage.Text = StaticFuncs.getCultureResource.GetString("app_Tree_FolderGettingData");

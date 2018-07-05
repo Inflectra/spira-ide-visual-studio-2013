@@ -10,7 +10,7 @@
         <Icon guid="imgSpira" id="SpiraLogo" />
         <Strings>
           <CommandName>cmdViewExplorerWindow</CommandName>
-          <ButtonText>SpiraTeam Project Explorer</ButtonText>
+          <ButtonText>SpiraPlan Project Explorer</ButtonText>
         </Strings>
       </Button>
     </Buttons>

@@ -99,16 +99,16 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		/// <param name="e">RoutedPropertyChangedEventArgs</param>
 		private void trvProject_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 		{
-			try
-			{
-				e.Handled = true;
 
+			try
+            {
+                this.btnRefresh.IsEnabled = true;
+                e.Handled = true;
 				//If it's a TreeViewArtifact item.
 				if (this.trvProject.SelectedItem != null && this.trvProject.SelectedItem.GetType() == typeof(TreeViewArtifact))
 				{
 					//Only if it's NOT not a folder.
 					TreeViewArtifact selItem = this.trvProject.SelectedItem as TreeViewArtifact;
-					this.btnRefresh.IsEnabled = (selItem != null && selItem.ArtifactIsFolder);
 
                     //Also refresh the properties window
                     if (Pane != null && Pane is toolSpiraExplorer)
@@ -119,8 +119,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                             shell.RefreshPropertyBrowser(-1);
                     }
                 }
-				else
-					this.btnRefresh.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
@@ -137,7 +135,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			try
 			{
 				TreeViewArtifact selItem = this.trvProject.SelectedItem as TreeViewArtifact;
-				if (selItem != null) this.refreshTreeNodeServerData(selItem);
+				if (selItem != null) this.refresh(selItem);
 			}
 			catch (Exception ex)
 			{
@@ -282,12 +280,12 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			{
 				//Define our standard nodes here.
 				// - No Projects
-				this._nodeNoProjects = new TreeViewArtifact(this.refreshTreeNodeServerData);
+				this._nodeNoProjects = new TreeViewArtifact(this.refresh);
 				this._nodeNoProjects.ArtifactName = "No projects selected for this solution.";
 				this._nodeNoProjects.ArtifactIsNo = true;
 
 				// - No Solution
-				this._nodeNoSolution = new TreeViewArtifact(this.refreshTreeNodeServerData);
+				this._nodeNoSolution = new TreeViewArtifact(this.refresh);
 				this._nodeNoSolution.ArtifactName = "No solution open.";
 				this._nodeNoSolution.ArtifactIsNo = true;
 			}
