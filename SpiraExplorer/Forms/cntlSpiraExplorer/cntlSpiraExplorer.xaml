@@ -10,7 +10,7 @@
     <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <ToolBarPanel Height="Auto" DockPanel.Dock="Top" Background="{DynamicResource {x:Static vsfx:VsBrushes.CommandShelfBackgroundGradientKey}}">
             <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Background="{DynamicResource {x:Static vsfx:VsBrushes.CommandBarGradientKey}}">
-                <Button Name="btnRefresh" ToolTip="Refresh Listings"  IsEnabledChanged="toolButton_IsEnabledChanged" Click="btnRefresh_Click" />
+                <Button Name="btnAutoRefresh" ToolTip="Click to turn Auto Refresh OFF" Click="btnAutoRefresh_Click" />
                 <Separator />
                 <Button Name="btnConfig" ToolTip="Project Explorer Configuration" Click="btnConfig_Click" />
                 <Button Name="btnNewTask" ToolTip="Create New Task" Click="btnNewTask_Click"/>

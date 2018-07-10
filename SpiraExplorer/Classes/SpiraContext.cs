@@ -14,6 +14,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
         private static bool isDirty = false;
         private static Uri baseUri = null;
         private static int projectId = 0;
+        private static bool autoRefresh = true;
 
         /// <summary>
         /// The base Url for SpiraTeam (stored in the .sln file)
@@ -38,6 +39,21 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Whether the plugin should auto-refresh every 60 seconds
+        /// </summary>
+        public static bool AutoRefresh
+        {
+            get
+            {
+                return autoRefresh;
+            }
+            set
+            {
+                autoRefresh = !autoRefresh;
+            }
         }
 
         /// <summary>
