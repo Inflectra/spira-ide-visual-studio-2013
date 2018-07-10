@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.Forms
 {
@@ -47,8 +48,17 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.Forms
 			}
 		}
 
-		/// <summary>Loads values from our Artifact item into the display fields.</summary>
-		private void loadDisplayData()
+        /// <summary>Catches when we're actually ready to display the data.</summary>
+        /// <param name="e">EventArgs</param>
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            this.loadDisplayData();
+        }
+
+        /// <summary>Loads values from our Artifact item into the display fields.</summary>
+        private void loadDisplayData()
 		{
 			this.dataProjectName.Text = this.DataItem.ProjectName;
 			this.dataServerUrl.Inlines.Add(this.DataItem.ServerURL.ToString());

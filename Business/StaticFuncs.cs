@@ -7,16 +7,16 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.SpiraTeam_Client;
-using Inflectra.Global;
-using Microsoft.VisualStudio.Shell;
+using Inflectra.Global; 
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Linq;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business.Properties;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.Shell;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Business
 {
-	public static partial  class StaticFuncs
+    public static partial  class StaticFuncs
 	{
 		private static ResourceManager _internalManager;
 		private static Dictionary<string, BitmapSource> storedImgs = new Dictionary<string, BitmapSource>();

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes;
+using Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms.newTask;
 
 namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 {
@@ -24,6 +25,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		string _solutionName;
 		private TreeViewArtifact _nodeNoSolution;
 		private TreeViewArtifact _nodeNoProjects;
+        /// <summary>The current instance of this object. Used for refreshing</summary>
+        private static cntlSpiraExplorer instance;
+
 		#endregion
 		#region Public Events
 		public event EventHandler<OpenItemEventArgs> OpenDetails;
@@ -39,15 +43,22 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				//Overall initialization.
 				InitializeComponent();
 
-				//Set button images and events.
-				// - Config button
-				Image btnConfigImage = Business.StaticFuncs.getImage("imgProject", new Size(16, 16));
+                instance = this;
+
+                //Set button images and events.
+                // - Config button
+                Image btnConfigImage = Business.StaticFuncs.getImage("imgSettings", new Size(16, 16));
 				btnConfigImage.Stretch = Stretch.None;
 				this.btnConfig.Content = btnConfigImage;
-				// - Refresh Button
-				Image btnRefreshImage = Business.StaticFuncs.getImage("imgRefresh", new Size(16, 16));
-				btnRefreshImage.Stretch = Stretch.None;
-				this.btnRefresh.Content = btnRefreshImage;
+
+                // Auto Refresh Button
+                Image btnAutoRefreshImage = Business.StaticFuncs.getImage("imgRefresh", new Size(16, 16));
+                btnAutoRefreshImage.Stretch = Stretch.None;
+                this.btnAutoRefresh.Content = btnAutoRefreshImage;
+
+                Image btnNewTaskImage = Business.StaticFuncs.getImage("imgNewTask", new Size(16, 16));
+                btnNewTaskImage.Stretch = Stretch.None;
+                this.btnNewTask.Content = btnNewTaskImage;
 				// - Set bar color.
 				this.barLoading.Foreground = (Brush)new System.Windows.Media.BrushConverter().ConvertFrom(StaticFuncs.getCultureResource.GetString("app_Colors_StyledBarColor"));
 
@@ -99,16 +110,17 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		/// <param name="e">RoutedPropertyChangedEventArgs</param>
 		private void trvProject_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 		{
-			try
-			{
-				e.Handled = true;
 
+			try
+            {
+                this.btnNewTask.IsEnabled = true;
+                this.btnAutoRefresh.IsEnabled = true;
+                e.Handled = true;
 				//If it's a TreeViewArtifact item.
 				if (this.trvProject.SelectedItem != null && this.trvProject.SelectedItem.GetType() == typeof(TreeViewArtifact))
 				{
 					//Only if it's NOT not a folder.
 					TreeViewArtifact selItem = this.trvProject.SelectedItem as TreeViewArtifact;
-					this.btnRefresh.IsEnabled = (selItem != null && selItem.ArtifactIsFolder);
 
                     //Also refresh the properties window
                     if (Pane != null && Pane is toolSpiraExplorer)
@@ -119,8 +131,6 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                             shell.RefreshPropertyBrowser(-1);
                     }
                 }
-				else
-					this.btnRefresh.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
@@ -129,27 +139,55 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			}
 		}
 
-		/// <summary>Hit when the user wants to refresh the list.</summary>
-		/// <param name="sender">btnRefresh, btnShowClosed</param>
-		/// <param name="e">Event Args</param>
-		private void btnRefresh_Click(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				TreeViewArtifact selItem = this.trvProject.SelectedItem as TreeViewArtifact;
-				if (selItem != null) this.refreshTreeNodeServerData(selItem);
-			}
-			catch (Exception ex)
-			{
-				Logger.LogMessage(ex, "btnRefresh_Click()");
-				MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
-			}
-		}
+        /// <summary>Used to refresh without the instance</summary>
+        public static void refresh()
+        {
+            instance.refresh(null);
+        }
+        
+        /// <summary>Hit when the user wants to create a new task.</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNewTask_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new NewTaskWindow().ShowDialog();
 
-		/// <summary>Hit when a toolbar button IsEnabled is changed, for greying out icons.</summary>
-		/// <param name="sender">toolButton</param>
-		/// <param name="e">DependencyPropertyChangedEventArgs</param>
-		private void toolButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(ex, "btnNewTask_Click()");
+                MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Hit when the user wants to toggle auto-refresh
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAutoRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            bool newRefresh = !SpiraContext.AutoRefresh;
+            if(newRefresh)
+            {
+                btnAutoRefresh.Opacity = 1;
+                btnAutoRefresh.ToolTip = "Click to turn Auto Refresh OFF";
+            }
+            else
+            {
+                btnAutoRefresh.Opacity = .5;
+                btnAutoRefresh.ToolTip = "Click to turn Auto Refresh ON";
+            }
+            //negate auto refresh
+            SpiraContext.AutoRefresh = newRefresh;
+        }
+
+        /// <summary>Hit when a toolbar button IsEnabled is changed, for greying out icons.</summary>
+        /// <param name="sender">toolButton</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs</param>
+        private void toolButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			try
 			{
@@ -282,12 +320,12 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			{
 				//Define our standard nodes here.
 				// - No Projects
-				this._nodeNoProjects = new TreeViewArtifact(this.refreshTreeNodeServerData);
+				this._nodeNoProjects = new TreeViewArtifact(this.refresh);
 				this._nodeNoProjects.ArtifactName = "No projects selected for this solution.";
 				this._nodeNoProjects.ArtifactIsNo = true;
 
 				// - No Solution
-				this._nodeNoSolution = new TreeViewArtifact(this.refreshTreeNodeServerData);
+				this._nodeNoSolution = new TreeViewArtifact(this.refresh);
 				this._nodeNoSolution.ArtifactName = "No solution open.";
 				this._nodeNoSolution.ArtifactIsNo = true;
 			}
@@ -318,5 +356,5 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			get;
 			set;
 		}
-	}
+    }
 }

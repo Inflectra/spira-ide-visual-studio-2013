@@ -18,6 +18,10 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		private static string CLASS = "cntlSpiraExplorer::";
 		private List<TreeViewArtifact> _Projects = new List<TreeViewArtifact>();
 		private int _numActiveClients = 0;
+        /// <summary>Timer called every timerWait seconds to auto-refresh items from server</summary>
+        private System.Timers.Timer refreshTimer;
+        /// <summary>Time (in miliseconds) to wait before refreshing automatically</summary>
+        private const int TimerWait = 60000;
 
         /// <summary>
         /// Returns the current project name
@@ -51,7 +55,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 
         /// <summary>Loads a Spira project into the treeview.</summary>
         /// <param name="projectId">The id of the project</param>
-        private void loadProject(int projectId)
+        public void loadProject(int projectId)
 		{
 			try
 			{
@@ -62,7 +66,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                     //Instantiate the new project (it will query the server and get the project name, etc.)
                     SpiraProject spiraProject = new SpiraProject(SpiraContext.Login, SpiraContext.Password, SpiraContext.BaseUri, SpiraContext.ProjectId);
 
-                    TreeViewArtifact newProj = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                    TreeViewArtifact newProj = new TreeViewArtifact(this.refresh);
                     newProj.ArtifactTag = spiraProject;
 					newProj.ArtifactId = ((Business.SpiraProject)newProj.ArtifactTag).ProjectId;
 					newProj.ArtifactName = ((Business.SpiraProject)newProj.ArtifactTag).ProjectName;
@@ -151,13 +155,25 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					foreach (TreeViewArtifact childItem in itemToRefresh.Items)
 						this.refreshTreeNodeServerData(childItem);
 				}
-			}
+
+            }
 			catch (Exception ex)
 			{
 				Logger.LogMessage(ex, "refreshTreeNodeServerData()");
 				MessageBox.Show(StaticFuncs.getCultureResource.GetString("app_General_UnexpectedError"), StaticFuncs.getCultureResource.GetString("app_General_ApplicationShortName"), MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
+
+        /// <summary>
+        /// Refresh all items from the server
+        /// </summary>
+        /// <param name="a">Only neccessary for calling, has no bearing on output</param>
+        public void refresh(TreeViewArtifact a)
+        {
+            this.refreshTreeNodeServerData(this._Projects[0]);
+            //fix width of 0 after refresh
+            this.UpdateLayout();
+        }
 
 		/// <summary>Refreshes the display for all loaded projects.</summary>
 		private void refreshProjects()
@@ -175,22 +191,22 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				foreach (TreeViewArtifact trvProj in this._Projects)
 				{
                     //Create the 'My' nodes.
-                    TreeViewArtifact folderUserMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                    TreeViewArtifact folderUserMy = new TreeViewArtifact(this.refresh);
                     folderUserMy.ArtifactIsFolder = true;
                     folderUserMy.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_My"), StaticFuncs.getCultureResource.GetString("app_Tree_Contacts"));
                     folderUserMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.User;
                     folderUserMy.ArtifactIsFolderMine = true;
-                    TreeViewArtifact folderIncMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                    TreeViewArtifact folderIncMy = new TreeViewArtifact(this.refresh);
 					folderIncMy.ArtifactIsFolder = true;
 					folderIncMy.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_My"), StaticFuncs.getCultureResource.GetString("app_Tree_Incidents"));
 					folderIncMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Incident;
 					folderIncMy.ArtifactIsFolderMine = true;
-					TreeViewArtifact folderReqMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
+					TreeViewArtifact folderReqMy = new TreeViewArtifact(this.refresh);
 					folderReqMy.ArtifactIsFolder = true;
 					folderReqMy.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_My"), StaticFuncs.getCultureResource.GetString("app_Tree_Requirements"));
 					folderReqMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Requirement;
 					folderReqMy.ArtifactIsFolderMine = true;
-					TreeViewArtifact folderTskMy = new TreeViewArtifact(this.refreshTreeNodeServerData);
+					TreeViewArtifact folderTskMy = new TreeViewArtifact(this.refresh);
 					folderTskMy.ArtifactIsFolder = true;
 					folderTskMy.ArtifactName = string.Format(StaticFuncs.getCultureResource.GetString("app_Tree_My"), StaticFuncs.getCultureResource.GetString("app_Tree_Tasks"));
 					folderTskMy.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Task;
@@ -207,7 +223,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 					trvProj.Items.Add(folderTskMy);
 
 					//Now, refresh the project.
-					this.refreshTreeNodeServerData(trvProj);
+					this.refresh(trvProj);
 				}
 			}
 			catch (Exception ex)
@@ -239,7 +255,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 						foreach (RemoteIncident incident in e.Result)
 						{
 							//Make new node.
-							TreeViewArtifact newNode = new TreeViewArtifact(this.refreshTreeNodeServerData);
+							TreeViewArtifact newNode = new TreeViewArtifact(this.refresh);
 							newNode.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Incident;
 							newNode.ArtifactTag = incident;
 							newNode.ArtifactName = incident.Name;
@@ -780,7 +796,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
                         foreach (RemoteUser remoteUser in e.Result)
                         {
                             //Make new node.
-                            TreeViewArtifact newNode = new TreeViewArtifact(this.refreshTreeNodeServerData);
+                            TreeViewArtifact newNode = new TreeViewArtifact(this.refresh);
                             newNode.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.User;
                             //newNode.TreeNode = this;
                             newNode.ArtifactTag = remoteUser;
@@ -844,7 +860,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 							if (!requirement.Summary)
 							{
 								//Make new node.
-								TreeViewArtifact newNode = new TreeViewArtifact(this.refreshTreeNodeServerData);
+								TreeViewArtifact newNode = new TreeViewArtifact(this.refresh);
 								newNode.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Requirement;
 								//newNode.TreeNode = this;
 								newNode.ArtifactTag = requirement;
@@ -907,7 +923,7 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 						foreach (RemoteTask task in e.Result)
 						{
 							//Make new node.
-							TreeViewArtifact newNode = new TreeViewArtifact(this.refreshTreeNodeServerData);
+							TreeViewArtifact newNode = new TreeViewArtifact(this.refresh);
 							newNode.ArtifactType = TreeViewArtifact.ArtifactTypeEnum.Task;
 							newNode.ArtifactTag = task;
 							newNode.ArtifactName = task.Name;
@@ -948,6 +964,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 			}
 		}
 
+        
+
 		/// <summary>Hit when a client is finished connecting.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -955,6 +973,24 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		{
 			try
 			{
+                this.btnNewTask.IsEnabled = true;
+                this.btnAutoRefresh.IsEnabled = true;
+                //start a timer if we haven't already
+                if(this.refreshTimer == null)
+                {
+                    //setup the timer
+                    this.refreshTimer = new System.Timers.Timer(TimerWait);
+                    //have the timer refresh when called
+                    this.refreshTimer.Elapsed += (s, j) =>  this.Dispatcher.Invoke(() => {
+                        //only refresh if the user has elected to
+                        if(SpiraContext.AutoRefresh) {
+                            this.refresh(null);
+                        }
+                    });
+                    this.refreshTimer.AutoReset = true;
+                    this.refreshTimer.Enabled = true;
+
+                }
 				//We're finished disconnecting. Let's null it out.
 				sender = null;
 			}
@@ -978,7 +1014,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this.barLoading.Visibility = Visibility.Collapsed;
 				this.trvProject.Cursor = System.Windows.Input.Cursors.Arrow;
 				this.trvProject.Items.Refresh();
-				this.btnRefresh.IsEnabled = false;
+                this.btnNewTask.IsEnabled = false;
+                this.btnAutoRefresh.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
@@ -997,7 +1034,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 				this.barLoading.Visibility = Visibility.Collapsed;
 				this.trvProject.Cursor = System.Windows.Input.Cursors.Arrow;
 				this.trvProject.Items.Refresh();
-				this.btnRefresh.IsEnabled = false;
+                this.btnNewTask.IsEnabled = false;
+                this.btnAutoRefresh.IsEnabled = false;
 			}
 			catch (Exception ex)
 			{
@@ -1035,15 +1073,18 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Forms
 		{
 			try
 			{
-				TreeViewArtifact errorNode = new TreeViewArtifact(this.refreshTreeNodeServerData);
+				TreeViewArtifact errorNode = new TreeViewArtifact(this.refresh);
 				errorNode.ArtifactIsError = true;
 				errorNode.ArtifactName = Title;
 				errorNode.ArtifactTag = exception;
 				errorNode.Parent = nodeToAddTo;
 
-				//Clear existing, add error.
-				nodeToAddTo.Items.Clear();
-				nodeToAddTo.Items.Add(errorNode);
+                //Clear existing, add error.
+                if (nodeToAddTo.Items.Count == 0)
+                {
+                    nodeToAddTo.Items.Clear();
+                    nodeToAddTo.Items.Add(errorNode);
+                }
 			}
 			catch (Exception ex)
 			{

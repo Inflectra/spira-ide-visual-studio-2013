@@ -14,7 +14,9 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
             this._explorerWindow = explorerWindow;
         }
 
-        [DisplayName("Project ID")]
+        #region Unused Project Properties
+
+        /*[DisplayName("Project ID")]
         [Category("Project Properties")]
         [Description("SpiraTeam Project ID")]
         public string ProjectId
@@ -47,11 +49,13 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
             {
                 return SpiraContext.BaseUri.ToString();
             }
-        }
+        }*/
+
+        #endregion
 
         [Category("Current Artifact")]
         [Description("The name of the currently selected artifact")]
-        [DisplayName("Artifact Name")]
+        [DisplayName("Name")]
         public string ArtifactName
         {
             get
@@ -93,6 +97,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
                             return ((RemoteRequirement)artifactTag).Description.HtmlRenderAsPlainText();
                         if (artifactTag is RemoteTask)
                             return ((RemoteTask)artifactTag).Description.HtmlRenderAsPlainText();
+                        if (artifactTag is RemoteUser)
+                            return ((RemoteUser)artifactTag).EmailAddress.HtmlRenderAsPlainText();
                     }
                 }
                 return (string)null;
@@ -117,6 +123,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
                             return ((RemoteRequirement)artifactTag).RequirementTypeName;
                         if (artifactTag is RemoteTask)
                             return ((RemoteTask)artifactTag).TaskTypeName;
+                        if (artifactTag is RemoteUser)
+                            return "Contact";
                     }
                 }
                 return (string)null;
@@ -141,6 +149,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
                             return ((RemoteRequirement)artifactTag).StatusName;
                         if (artifactTag is RemoteTask)
                             return ((RemoteTask)artifactTag).TaskStatusName;
+                        if (artifactTag is RemoteUser)
+                            return "N/A";
                     }
                 }
                 return (string)null;
@@ -165,6 +175,8 @@ namespace Inflectra.SpiraTest.IDEIntegration.VisualStudio2012.Classes
                             return ((RemoteRequirement)artifactTag).ImportanceName;
                         if (artifactTag is RemoteTask)
                             return ((RemoteTask)artifactTag).TaskPriorityName;
+                        if (artifactTag is RemoteUser)
+                            return "N/A";
                     }
                 }
                 return (string)null;

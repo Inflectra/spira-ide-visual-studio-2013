@@ -172,13 +172,13 @@
     <value>..\Resources\imgFolder.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgFolderIncident" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgFolderIncident.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\imgIncident.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgFolderRequirement" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgFolderRequirement.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\imgRequirement.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgFolderTask" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgFolderTask.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\imgTask.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgIncident" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\imgIncident.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -204,6 +204,9 @@
   <data name="imgRefresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\imgRefresh.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="imgNewTask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgNewTask.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="imgTaskTime" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\imgTaskTime.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -226,7 +229,7 @@
     <value>..\Resources\ico_Warning.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mnuViewTreeTip" xml:space="preserve">
-    <value>Open the SpiraTeam Project Explorer</value>
+    <value>Open the SpiraPlan Project Explorer</value>
     <comment>Statusbar or Tooltip text for the command.</comment>
   </data>
   <data name="strAssignProjectTitle" xml:space="preserve">
@@ -250,7 +253,7 @@
     <comment>String used for the NewProject title bar.</comment>
   </data>
   <data name="app_Tree_Name" xml:space="preserve">
-    <value>SpiraTeam Project Explorer</value>
+    <value>SpiraPlan Project Explorer</value>
     <comment>String used for the ProjectTree ToolWindow </comment>
   </data>
   <data name="strSettingSectionGeneral" xml:space="preserve">
@@ -372,17 +375,14 @@ http://server/SpiraTeam/</value>
   <data name="app_Tree_FolderGettingData" xml:space="preserve">
     <value>This folder is still retrieving data from the server.</value>
   </data>
-  <data name="app_Tree_FolderHiIncidents" xml:space="preserve">
-    <value>Items italicized in red are at 0% completion and are beyond their start-date.</value>
-  </data>
-  <data name="app_Tree_FolderHiTasks" xml:space="preserve">
-    <value>Items italicized in red are past their due-date.</value>
-  </data>
   <data name="app_Tree_FolderIncidents" xml:space="preserve">
     <value>This folder contains incidents related to this Project.</value>
   </data>
   <data name="app_Tree_FolderMyIncidents" xml:space="preserve">
     <value>This folder contains all incidents assigned to you.</value>
+  </data>
+  <data name="app_Tree_FolderMyContacts" xml:space="preserve">
+    <value>This folder contains all contacts you have added.</value>
   </data>
   <data name="app_Tree_FolderMyRequirements" xml:space="preserve">
     <value>This folder contains all requirements assigned to you.</value>
@@ -687,7 +687,7 @@ Are you sure you want to continue?</value>
     <value>Contacts</value>
   </data>
   <data name="imgFolderUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgFolderUser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\imgUser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\imgUser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
